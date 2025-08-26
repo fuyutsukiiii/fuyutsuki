@@ -79,8 +79,8 @@ const Home = () => {
     <div className="h-screen w-screen flex bg-primary-gray text-primary-blue overscroll-contain">
       <Grid />
       {/* Menu */}
-      <div className="absolute inset-8 grid grid-rows-[4fr_5fr_3fr_3fr_7fr_10fr_5fr] grid-cols-[3fr_2fr_9fr] md:grid-rows-[3fr_1fr_8fr_3fr_2fr] md:grid-cols-[4fr_6fr] z-1 overflow-visible">
-        {/* <div className="md:col-span-full md:row-start-1 md:row-end-3 pl-12 flex items-center gap-12">
+      <div className="absolute inset-4 grid grid-rows-[4fr_5fr_3fr_3fr_7fr_10fr_5fr] grid-cols-[3fr_2fr_9fr] md:grid-rows-[3fr_1fr_8fr_3fr_2fr] md:grid-cols-[4fr_6fr] z-1 overflow-visible">
+        <div className="col-start-1 col-end-3 md:col-span-full md:row-start-1 md:row-end-3 pl-12 flex items-center gap-12">
           {["MENU", "GALLERY", "CONTACT", "STORE"].map((item) => {
             return (
               <span
@@ -92,7 +92,7 @@ const Home = () => {
               </span>
             );
           })}
-        </div> */}
+        </div>
         {/* Fuyutsuki caption */}
         <div className="col-start-3 col-end-4 row-start-2 row-end-3 md:col-start-1 md:col-end-2 md:row-start-2 md:row-end-4 flex flex-col justify-center items-start overflow-visible bg-yellow-400/0">
           <div className="flex flex-col items-start md:gap-2">
@@ -153,7 +153,7 @@ const Home = () => {
           </div>
         )}
         {/* Gallery Button */}
-        <div className="row-start-7 col-start-1 col-end-4 md:col-span-full md:row-start-4 md:row-end-6 relative flex items-center md:pl-6 text-5xl md:text-[9rem] tracking-[2.5vw] overflow-visible">
+        <div className="row-start-7 row-end-8 outline-1 col-start-1 col-end-4 md:col-span-full md:row-start-4 md:row-end-6 relative flex items-center md:pl-6 text-5xl md:text-[9rem] tracking-[2.5vw] overflow-visible">
           <span
             className="font-bold-inter pl-6 cursor-pointer z-1"
             ref={galleryTextRef}
