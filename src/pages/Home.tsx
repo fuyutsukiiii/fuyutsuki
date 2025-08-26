@@ -79,9 +79,9 @@ const Home = () => {
     <div className="h-screen w-screen flex bg-primary-gray text-primary-blue overscroll-contain">
       <Grid />
       {/* Menu */}
-      <div className="absolute inset-4 grid grid-rows-[4fr_5fr_3fr_3fr_7fr_10fr_5fr] grid-cols-[3fr_2fr_9fr] md:grid-rows-[3fr_1fr_8fr_3fr_2fr] md:grid-cols-[4fr_6fr] z-1 overflow-visible">
-        <div className="col-start-1 col-end-3 md:col-span-full md:row-start-1 md:row-end-3 pl-12 flex items-center gap-12">
-          {["MENU", "GALLERY", "CONTACT", "STORE"].map((item) => {
+      <div className="absolute inset-4 grid grid-rows-[4fr_5fr_3fr_3fr_7fr_7fr_2fr_2fr_4fr] grid-cols-[3fr_2fr_9fr] md:grid-rows-[3fr_1fr_8fr_3fr_2fr] md:grid-cols-[4fr_6fr] z-1 overflow-visible">
+        <div className="col-span-full md:row-start-1 md:row-end-3 md:pl-12 flex items-center justify-center md:justify-start gap-12">
+          {["HOME", "GALLERY", "CONTACT"].map((item) => {
             return (
               <span
                 key={item}
@@ -105,8 +105,8 @@ const Home = () => {
           </div>
         </div>
         {/* Image Carousel */}
-        <div className="relative col-start-2 col-end-4 row-start-4 row-end-8 md:col-start-2 md:col-end-3 md:row-start-2 md:row-end-5 flex justify-end items-start md:items-center md:justify-center">
-          <div className="w-[100%] md:w-max md:h-[90%] aspect-[1/1.3] md:aspect-[4.5/3] z-2 outline-12 outline-white md:outline-0 ">
+        <div className="relative col-start-2 col-end-4 row-start-4 row-end-8 md:col-start-2 md:col-end-3 md:row-start-2 md:row-end-5 flex items-center justify-center">
+          <div className="w-[95%] md:w-max md:h-[95%] aspect-[1/1.3] md:aspect-[4.5/3] z-2">
             <ImageCarousel
               className="h-full w-full z-2"
               cycleDuration={CYCLE_DURATION}
@@ -114,7 +114,7 @@ const Home = () => {
             />
           </div>
           {/* White border on a different layer for GALLERY text effect */}
-          <div className="absolute h-0 md:h-[95%] md:aspect-[4.5/3] bg-white z-1" />
+          <div className="absolute w-full aspect-[1/1.3] md:h-full md:w-max md:aspect-[4.5/3] bg-white z-1" />
           {/* Piece Title */}
           {device === "desktop" && (
             <div className="absolute h-[95%] md:aspect-[4.5/3] z-3  flex flex-col items-end justify-start">
@@ -153,7 +153,7 @@ const Home = () => {
           </div>
         )}
         {/* Gallery Button */}
-        <div className="row-start-7 row-end-8 outline-1 col-start-1 col-end-4 md:col-span-full md:row-start-4 md:row-end-6 relative flex items-center md:pl-6 text-5xl md:text-[9rem] tracking-[2.5vw] overflow-visible">
+        <div className="row-start-7 row-end-9 col-start-1 col-end-4 md:col-span-full md:row-start-4 md:row-end-6 relative flex items-center md:pl-6 text-5xl md:text-[9rem] tracking-[2.5vw] overflow-visible">
           <span
             className="font-bold-inter pl-6 cursor-pointer z-1"
             ref={galleryTextRef}
