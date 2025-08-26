@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Italiana&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Italiana&family=Major+Mono+Display&display=swap');
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'Helvetica-Bold';
+  src: url('../fonts/Helvetica-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Helvetica-BoldOblique';
+  src: url('../fonts/Helvetica-BoldOblique.ttf') format('truetype');
+  font-weight: bold;
+  font-style: oblique;
+}
+
+@font-face {
+  font-family: 'Helvetica-Compressed';
+  src: url('../fonts/helvetica-compressed-5871d14b6903a.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Helvetica-Light';
+  src: url('../fonts/helvetica-light-587ebe5a59211.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Helvetica-Oblique';
+  src: url('../fonts/Helvetica-Oblique.ttf') format('truetype');
+  font-weight: normal;
+  font-style: oblique;
+}
+
+@font-face {
+  font-family: 'Helvetica-Rounded-Bold';
+  src: url('../fonts/helvetica-rounded-bold-5871d05ead8de.otf') format('opentype');
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Helvetica';
+  src: url('/fonts/Helvetica.ttf') format('truetype');
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+.font-italiana-regular {
+  font-family: "Italiana", sans-serif;
+  font-style: normal;
+}
+
+.font-optima { 
+  font-family: Optima, Segoe, "Segoe UI", Candara, Calibri, Arial, sans-serif;  
+  }
+
+.font-optima-italic { 
+  font-family: Optima, Segoe, "Segoe UI", Candara, Calibri, Arial, sans-serif;  
+  font-style: italic;
+  }
+
+
+.font-major-mono-display {
+  font-family: "Major Mono Display", monospace;
+  font-style: normal;
+}
+
+.font-bold-inter {
+  font-family: 'Inter';
+  font-style: bold;
+  font-weight: 700;
+}
+
+.font-inter {
+  font-family: 'Inter';
+  font-style: normal;
+}
+
+.font-helvetica {
+  font-family: 'Helvetica', sans-serif;
+}
+
+@theme {
+  --font-primary: Optima, "Segoe UI";
+  
+  --color-graybg:#1a1a1a;
+  --color-purplee:#716AF8;
+  --color-primary-blue: #0023E7;
+  --color-primary-gray: #ebebeb;
+  --color-accent-gray: #C7C7C7;
+  --color-dark-gray: #000;
+}
