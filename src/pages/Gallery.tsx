@@ -83,12 +83,15 @@ const Gallery = () => {
         </motion.div>
       </div>
       <motion.div
-        // initial={{ opacity: 0, x: "-20%" }}
-        // animate={{ opacity: 1, x: 0 }}
-        // transition={{ duration: 0.2, ease: "easeIn" }}
+      // initial={{ opacity: 0, x: "-20%" }}
+      // animate={{ opacity: 1, x: 0 }}
+      // transition={{ duration: 0.2, ease: "easeIn" }}
       >
-        {galleryWorks.map((work, index) => (
-          <div className="w-screen grid grid-cols-[6fr_8fr_3fr_9fr] md:grid-cols-[3fr_8fr_3fr_9fr] grid-rows-none z-1">
+        {galleryWorks.map((work) => (
+          <div
+            className="w-screen grid grid-cols-[6fr_8fr_3fr_9fr] md:grid-cols-[3fr_8fr_3fr_9fr] grid-rows-none z-1"
+            key={work._id}
+          >
             <motion.div
               // initial={{ opacity: 0, x: "20%" }}
               // animate={{ opacity: 1, x: 0 }}
@@ -104,7 +107,6 @@ const Gallery = () => {
                 marginTop: device === "desktop" ? "-15vh" : "-7vh",
                 marginBottom: device === "desktop" ? "-15vh" : "-7vh",
               }}
-              key={index}
               readScale={(scale) => handleRescale(work, scale)}
               scrollContainerRef={worksScrollRef as RefObject<HTMLDivElement>}
               onClick={() => navigate(`/illustration/${work.slug.current}`)}

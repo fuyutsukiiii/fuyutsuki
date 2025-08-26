@@ -5,7 +5,6 @@ import {
   Navigate,
 } from "react-router-dom";
 import { loader as newGalleryLoader } from "./pages/Gallery";
-import { loader as pieceLoader } from "./pages/Piece";
 import Home, { loader as homeLoader } from "./pages/Home";
 import { createRoot } from "react-dom/client";
 import { StrictMode } from "react";
@@ -37,7 +36,7 @@ const router = createBrowserRouter([
           {
             path: "illustration/:pieceSlug",
             element: <Piece />,
-            loader: pieceLoader,
+            // loader: pieceLoader,
           },
           {
             path: "piece-not-found",

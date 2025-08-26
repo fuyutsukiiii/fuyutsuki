@@ -1,4 +1,4 @@
-import { type PortableTextBlock } from "@portabletext/react"
+import { type PortableTextBlock } from "@portabletext/react";
 
 export interface PreviewArtPiece {
   _id: string;
@@ -15,4 +15,24 @@ export interface FullPiece {
   date: string;
   description: PortableTextBlock;
   images: object[];
+}
+
+export interface FullPieceWithSlug {
+  title: string;
+  date: string;
+  description: PortableTextBlock;
+  images: object[];
+  slug: {
+    current: string;
+  };
+}
+
+export interface ProcessedPiece {
+  title: string;
+  date: string;
+  description: PortableTextBlock;
+  urls: string[];
+  slug: {
+    current: string;
+  };
 }
