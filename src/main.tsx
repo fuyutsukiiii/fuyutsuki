@@ -7,7 +7,7 @@ import {
 import { loader as newGalleryLoader } from "./pages/Gallery";
 import Home, { loader as homeLoader } from "./pages/Home";
 import { createRoot } from "react-dom/client";
-import { StrictMode } from "react";
+import { StrictMode, Suspense } from "react";
 import Gallery from "./pages/Gallery";
 import Piece from "./pages/Piece";
 import Contact from "./pages/Contact";

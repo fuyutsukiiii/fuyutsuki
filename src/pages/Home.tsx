@@ -8,6 +8,7 @@ import ImageCarousel from "../components/molecules/ImageCarousel";
 import type { PreviewArtPiece } from "../../Types";
 import RotatingText from "../components/atoms/RotatingText";
 import { DeviceContext } from "../components/templates/GlobalWrapper";
+import useTimer from "../hooks/useTimer";
 
 const isMobile = window.innerWidth < 768;
 
@@ -50,8 +51,6 @@ const Home = () => {
   const [galleryTextWidth, setGalleryTextWidth] = useState(0);
   const [galleryTextHeight, setGalleryTextHeight] = useState(0);
 
-  console.log(featuredWorks);
-
   useEffect(() => {
     function measure() {
       if (galleryTextRef.current) {
@@ -74,12 +73,15 @@ const Home = () => {
         document.fonts.removeEventListener("loadingdone", measure);
       }
     };
-  }, [galleryTextRef]);
+  }, [galleryTextRef.current]);
+
+  const [timer] = useTimer(CYCLE_DURATION * 1000);
+  const currentTitle = featuredWorks[timer % featuredWorks.length].title;
 
   return (
     <div className="h-screen w-screen flex bg-primary-gray text-primary-blue overscroll-contain">
       <Grid />
-      <div className="absolute left-4 top-4 bottom-8 right-8 md:inset-4 grid grid-rows-[4fr_5fr_3fr_3fr_7fr_7fr_2fr_2fr_4fr] grid-cols-[3fr_2fr_9fr] md:grid-rows-[3fr_1fr_8fr_3fr_2fr] md:grid-cols-[4fr_6fr] z-1 overflow-visible">
+      <div className="absolute left-4 top-4 bottom-8 right-8 md:inset-4 grid grid-rows-[4fr_5fr_3fr_3fr_7fr_7fr_2fr_2fr_4fr] grid-cols-[3fr_2fr_1fr_9fr] md:grid-rows-[3fr_1fr_8fr_3fr_2fr] md:grid-cols-[4fr_6fr] z-1 overflow-visible">
         {/* Menu */}
         <div className="col-span-full md:row-start-1 md:row-end-3 md:pl-12 flex items-center justify-center md:justify-start gap-12">
           {["HOME", "GALLERY", "CONTACT"].map((item) => {
@@ -95,7 +97,7 @@ const Home = () => {
           })}
         </div>
         {/* Fuyutsuki caption */}
-        <div className="col-start-3 col-end-4 row-start-2 row-end-3 md:col-start-1 md:col-end-2 md:row-start-2 md:row-end-4 flex flex-col justify-center items-start overflow-visible z-3">
+        <div className="col-start-3 col-end-5 row-start-2 row-end-3 md:col-start-1 md:col-end-2 md:row-start-2 md:row-end-4 flex flex-col justify-center items-start overflow-visible z-3">
           <div className="flex flex-col items-start md:gap-2">
             <span className="font-helvetica font-bold text-black text-3xl md:text-6xl tracking-wider text-shadow-2xs text-shadow-white/30">
               FUYUTSUKI
@@ -106,9 +108,9 @@ const Home = () => {
           </div>
         </div>
         {/* Image Carousel */}
-        <div className="relative col-start-2 col-end-4 row-start-4 row-end-10 md:col-start-2 md:col-end-3 md:row-start-2 md:row-end-5 flex items-center justify-center">
+        <div className="relative col-start-2 col-end-5 row-start-4 row-end-10 md:col-start-2 md:col-end-3 md:row-start-2 md:row-end-5 flex items-end md:items-center justify-center">
           <div
-            className="max-h-full max-w-full h-[95%] md:h-max md:w-[95%] aspect-[1/1.4] md:aspect-[4.5/3] z-2"
+            className="max-h-full max-w-full h-[95%] md:h-max md:max-h-[95%] md:w-[95%] aspect-[1/1.4] md:aspect-[4.5/3] z-2"
             ref={carouselRef}
           >
             <ImageCarousel
@@ -132,7 +134,7 @@ const Home = () => {
           {/* Piece Title (Desktop) */}
           {device === "desktop" && (
             <div
-              className="absolute max-h-full max-w-full z-3 flex flex-col items-end justify-start"
+              className="absolute max-h-full max-w-full z-3 flex flex-col items-end justify-start outline-1"
               style={{
                 width: carouselRef.current
                   ? (carouselRef.current.clientWidth * 100) / 90
@@ -160,13 +162,14 @@ const Home = () => {
         </div>
         {/* Piece Title (Mobile) */}
         {device === "mobile" && (
-          <div className="row-start-5 row-end-6 col-start-1 col-end-4 flex flex-col items-start justify-start overflow-visible">
+          <div className="row-start-5 row-end-6 col-start-1 col-end-5 flex flex-col items-start justify-start overflow-visible">
             {Array.from({ length: 3 }).map((_, index) => (
               <div
                 className="relative overflow-y-hidden pb-12 -mb-12 flex justify-center items-center text-xl md:text-5xl tracking-[0.15em] whitespace-nowrap"
                 key={index}
               >
                 <RotatingText
+                  mainClassName="whitespace-nowrap"
                   rotationInterval={CYCLE_DURATION * 1000}
                   texts={featuredWorks.map((work) => work.title)}
                   initial={{ y: "70%", opacity: 0 }}
@@ -174,7 +177,8 @@ const Home = () => {
                   transition={{ ease: "easeInOut" }}
                 />
                 <RotatingText
-                  className="absolute text-white/100 mix-blend-overlay text-shadow-[1px] text-shadow-black z-3"
+                  mainClassName="whitespace-nowrap"
+                  className="absolute text-white/100 mix-blend-overlay text-shadow-xs text-shadow-white z-3"
                   rotationInterval={CYCLE_DURATION * 1000}
                   texts={featuredWorks.map((work) => work.title)}
                   initial={{ y: "70%", opacity: 0 }}
@@ -186,7 +190,7 @@ const Home = () => {
           </div>
         )}
         {/* Gallery Button */}
-        <div className="row-start-8 row-end-10 col-start-1 col-end-4 md:col-span-full md:row-start-4 md:row-end-6 relative flex items-center md:pl-6 text-5xl md:text-[9rem] tracking-[2.5vw] overflow-visible">
+        <div className="row-start-9 row-end-10 col-start-1 col-end-5 md:col-span-full md:row-start-4 md:row-end-6 relative flex items-center md:pl-6 text-5xl md:text-[9rem] tracking-[2.5vw] overflow-visible">
           <span
             className="font-bold-inter pl-6 cursor-pointer z-1"
             ref={galleryTextRef}
@@ -195,7 +199,7 @@ const Home = () => {
             GALLERY
           </span>
           <span
-            className="absolute font-bold-inter pl-6 cursor-pointer text-white/100 mix-blend-overlay text-shadow-xs text-shadow-black z-3"
+            className="absolute font-bold-inter pl-6 cursor-pointer text-white/100 mix-blend-overlay text-shadow-xs text-shadow-white z-3"
             onClick={() => navigate("/gallery")}
           >
             GALLERY

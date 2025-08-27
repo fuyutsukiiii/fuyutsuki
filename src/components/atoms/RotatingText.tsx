@@ -1,6 +1,7 @@
 import React, {
   forwardRef,
   useCallback,
+  useContext,
   useEffect,
   useImperativeHandle,
   useMemo,
@@ -14,6 +15,7 @@ import {
   type Target,
   type TargetAndTransition,
 } from "framer-motion";
+import { DeviceContext } from "../templates/GlobalWrapper";
 
 function cn(...classes: (string | undefined | null | boolean)[]): string {
   return classes.filter(Boolean).join(" ");
@@ -181,6 +183,8 @@ const RotatingText = forwardRef<RotatingTextRef, RotatingTextProps>(
       return () => clearInterval(intervalId);
     }, [next, rotationInterval, auto]);
 
+    const device = useContext(DeviceContext);
+
     return (
       <motion.span
         className={cn(
@@ -193,7 +197,7 @@ const RotatingText = forwardRef<RotatingTextRef, RotatingTextProps>(
         <span className="sr-only">{texts[currentTextIndex]}</span>
         <AnimatePresence
           mode={animatePresenceMode}
-          // initial={animatePresenceInitial}
+          initial={animatePresenceInitial}
         >
           <motion.span
             key={currentTextIndex}
@@ -203,6 +207,7 @@ const RotatingText = forwardRef<RotatingTextRef, RotatingTextProps>(
                 : "flex flex-wrap whitespace-pre-wrap relative"
             )}
             aria-hidden="true"
+            style={device === "mobile" ? { letterSpacing: `${texts[currentTextIndex].length < 11 ? 1.1 : 0.15}em` } : {}}
           >
             {elements.map((wordObj, wordIndex, array) => {
               const previousCharsCount = array
