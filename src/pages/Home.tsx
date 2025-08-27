@@ -8,7 +8,6 @@ import ImageCarousel from "../components/molecules/ImageCarousel";
 import type { PreviewArtPiece } from "../../Types";
 import RotatingText from "../components/atoms/RotatingText";
 import { DeviceContext } from "../components/templates/GlobalWrapper";
-import useTimer from "../hooks/useTimer";
 
 const isMobile = window.innerWidth < 768;
 
@@ -75,9 +74,6 @@ const Home = () => {
       }
     };
   }, [galleryTextRef.current]);
-
-  const [timer] = useTimer(CYCLE_DURATION * 1000);
-  const currentTitle = featuredWorks[timer % featuredWorks.length].title;
 
   return (
     <div className="h-screen w-screen flex bg-primary-gray text-primary-blue overscroll-contain">
@@ -147,15 +143,17 @@ const Home = () => {
               }}
             >
               {Array.from({ length: 3 }).map((_, index) => (
-                <div className="overflow-y-hidden pb-12 -mb-12">
+                <div className="overflow-y-hidden pb-12 -mb-12" key={index}>
                   <RotatingText
-                    key={index}
                     className="md:text-5xl tracking-widest text-shadow-xs text-shadow-white/30"
                     rotationInterval={CYCLE_DURATION * 1000}
                     texts={featuredWorks.map((work) => work.title)}
                     initial={{ y: "70%", opacity: 0 }}
                     exit={{ y: "-50%", opacity: 0.2 }}
-                    transition={{ ease: "easeInOut", duration: TRANSITION_TIME / 2 }}
+                    transition={{
+                      ease: "easeInOut",
+                      duration: TRANSITION_TIME / 2,
+                    }}
                   />
                 </div>
               ))}
@@ -173,21 +171,25 @@ const Home = () => {
                 <RotatingText
                   mainClassName="whitespace-nowrap"
                   rotationInterval={CYCLE_DURATION * 1000}
-                  texts={["test", "testtest", "testtesttest", "testtesttesttest"]}
-                  // texts={featuredWorks.map((work) => work.title)}
+                  texts={featuredWorks.map((work) => work.title)}
                   initial={{ y: "70%", opacity: 0 }}
                   exit={{ y: "-50%", opacity: 0.2 }}
-                  transition={{ ease: "easeInOut", duration: TRANSITION_TIME / 2 }}
+                  transition={{
+                    ease: "easeInOut",
+                    duration: TRANSITION_TIME / 2,
+                  }}
                 />
                 <RotatingText
                   mainClassName="whitespace-nowrap"
                   className="absolute text-white/100 mix-blend-overlay text-shadow-xs text-shadow-white z-3"
                   rotationInterval={CYCLE_DURATION * 1000}
-                  texts={["test", "testtest", "testtesttest", "testtesttesttest"]}
-                  // texts={featuredWorks.map((work) => work.title)}
+                  texts={featuredWorks.map((work) => work.title)}
                   initial={{ y: "70%", opacity: 0 }}
                   exit={{ y: "-50%", opacity: 0.2 }}
-                  transition={{ ease: "easeInOut", duration: TRANSITION_TIME / 2 }}
+                  transition={{
+                    ease: "easeInOut",
+                    duration: TRANSITION_TIME / 2,
+                  }}
                 />
               </div>
             ))}
@@ -246,25 +248,25 @@ function inverseOverlayBlendWithWhite(hex: string): string {
   );
 }
 
-function inverseColorDodgeWithWhite(hex: string): string {
-  // Convert hex to RGB
-  const rgb = hex
-    .replace("#", "")
-    .match(/.{2}/g)!
-    .map((x) => parseInt(x, 16));
+// function inverseColorDodgeWithWhite(hex: string): string {
+//   // Convert hex to RGB
+//   const rgb = hex
+//     .replace("#", "")
+//     .match(/.{2}/g)!
+//     .map((x) => parseInt(x, 16));
 
-  // For color dodge with white, any value in [128,255] will result in white.
-  // Pick midpoint for visual consistency.
-  const inverse = rgb.map((result) => {
-    if (result >= 128) return 128;
-    return result;
-  });
+//   // For color dodge with white, any value in [128,255] will result in white.
+//   // Pick midpoint for visual consistency.
+//   const inverse = rgb.map((result) => {
+//     if (result >= 128) return 128;
+//     return result;
+//   });
 
-  return (
-    "#" +
-    inverse
-      .map((x) => x.toString(16).padStart(2, "0"))
-      .join("")
-      .toUpperCase()
-  );
-}
+//   return (
+//     "#" +
+//     inverse
+//       .map((x) => x.toString(16).padStart(2, "0"))
+//       .join("")
+//       .toUpperCase()
+//   );
+// }

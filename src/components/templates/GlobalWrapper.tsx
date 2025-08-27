@@ -1,4 +1,4 @@
-import { createContext, Suspense, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import type { FullPieceWithSlug, ProcessedPiece } from "../../../Types";
 import { client } from "../../sanity/client";
