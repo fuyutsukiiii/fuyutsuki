@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
-import useTimer from "../../hooks/useTimer";
+import { useRef} from "react";
 import type { PreviewArtPiece } from "../../../Types";
 import { urlFor } from "../../sanity/utils";
 
@@ -36,8 +35,6 @@ const ImageCarousel = ({
       // ^Use this console log to see how it works
     }
   );
-
-  console.log(translationArray, breakpoints);
 
   return (
     <div className={`${className} overflow-hidden`} ref={parentRef}>
