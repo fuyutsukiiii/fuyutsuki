@@ -13,6 +13,7 @@ import Piece from "./pages/Piece";
 import Contact from "./pages/Contact";
 import Layout from "./pages/Layout";
 import GlobalWrapper from "./components/templates/GlobalWrapper";
+import Testing from "./pages/Testing";
 
 const router = createBrowserRouter([
   {
@@ -46,11 +47,10 @@ const router = createBrowserRouter([
           },
         ],
       },
-      // {
-      //   path: "testing",
-      //   element: <Testing />,
-      //   loader: homeLoader,
-      // },
+      {
+        path: "testing",
+        element: <Testing />,
+      },
       // {
       //   path: "/old-home",
       //   element: <OldHome />,

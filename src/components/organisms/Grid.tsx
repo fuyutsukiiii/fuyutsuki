@@ -14,8 +14,8 @@ const Grid = () => {
     const calculateGridDimensions = () => {
       const rect = gridRef.current?.getBoundingClientRect();
       if (rect) {
-        setRows(Math.floor(rect.height / (isMobile ? 50 : 75)));
-        setColumns(Math.floor(rect.width / (isMobile ? 50 : 75)));
+        setRows(Math.floor(rect.height / (isMobile ? 35 : 75)));
+        setColumns(Math.floor(rect.width / (isMobile ? 35 : 75)));
       }
     };
 

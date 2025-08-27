@@ -22,7 +22,7 @@ const FEATURED_QUERY = `*[_type == "home${isMobile ? "-mobile" : ""}"]{
   }
 }`;
 
-const CYCLE_DURATION = 5;
+const CYCLE_DURATION = 2;
 
 export async function loader() {
   const result = await client.fetch<{ works: SanityDocument[] }[]>(
@@ -79,7 +79,7 @@ const Home = () => {
   return (
     <div className="h-screen w-screen flex bg-primary-gray text-primary-blue overscroll-contain">
       <Grid />
-      <div className="absolute inset-4 grid grid-rows-[4fr_5fr_3fr_3fr_7fr_7fr_2fr_2fr_4fr] grid-cols-[3fr_2fr_9fr] md:grid-rows-[3fr_1fr_8fr_3fr_2fr] md:grid-cols-[4fr_6fr] z-1 overflow-visible">
+      <div className="absolute left-4 top-4 bottom-8 right-8 md:inset-4 grid grid-rows-[4fr_5fr_3fr_3fr_7fr_7fr_2fr_2fr_4fr] grid-cols-[3fr_2fr_9fr] md:grid-rows-[3fr_1fr_8fr_3fr_2fr] md:grid-cols-[4fr_6fr] z-1 overflow-visible">
         {/* Menu */}
         <div className="col-span-full md:row-start-1 md:row-end-3 md:pl-12 flex items-center justify-center md:justify-start gap-12">
           {["HOME", "GALLERY", "CONTACT"].map((item) => {
@@ -106,9 +106,9 @@ const Home = () => {
           </div>
         </div>
         {/* Image Carousel */}
-        <div className="relative col-start-2 col-end-4 row-start-4 row-end-8 md:col-start-2 md:col-end-3 md:row-start-2 md:row-end-5 flex items-center justify-center">
+        <div className="relative col-start-2 col-end-4 row-start-4 row-end-10 md:col-start-2 md:col-end-3 md:row-start-2 md:row-end-5 flex items-center justify-center">
           <div
-            className="max-h-full max-w-full h-[95%] md:h-max md:w-[95%] aspect-[1/1.3] md:aspect-[4.5/3] z-2"
+            className="max-h-full max-w-full h-[95%] md:h-max md:w-[95%] aspect-[1/1.4] md:aspect-[4.5/3] z-2"
             ref={carouselRef}
           >
             <ImageCarousel
@@ -119,7 +119,7 @@ const Home = () => {
           </div>
           {/* White border on a different layer for GALLERY text effect */}
           <div
-            className="absolute max-h-full max-w-full bg-white z-1"
+            className="absolute md:max-h-full md:max-w-full md:bg-white z-1"
             style={{
               width: carouselRef.current
                 ? (carouselRef.current.clientWidth * 100) / 90
@@ -129,7 +129,7 @@ const Home = () => {
                 : 0,
             }}
           />
-          {/* Piece Title */}
+          {/* Piece Title (Desktop) */}
           {device === "desktop" && (
             <div
               className="absolute max-h-full max-w-full z-3 flex flex-col items-end justify-start"
@@ -158,14 +158,23 @@ const Home = () => {
             </div>
           )}
         </div>
-        {/* Piece Title */}
+        {/* Piece Title (Mobile) */}
         {device === "mobile" && (
-          <div className="row-start-5 row-end-6 col-start-1 col-end-4 flex flex-col items-start justify-start overflow-visible z-2">
+          <div className="row-start-5 row-end-6 col-start-1 col-end-4 flex flex-col items-start justify-start overflow-visible">
             {Array.from({ length: 3 }).map((_, index) => (
-              <div className="overflow-y-hidden pb-12 -mb-12">
+              <div
+                className="relative overflow-y-hidden pb-12 -mb-12 flex justify-center items-center text-xl md:text-5xl tracking-[0.15em] whitespace-nowrap"
+                key={index}
+              >
                 <RotatingText
-                  key={index}
-                  className="text-xl md:text-5xl tracking-[0.15em] text-shadow-sm text-shadow-white/30 whitespace-nowrap"
+                  rotationInterval={CYCLE_DURATION * 1000}
+                  texts={featuredWorks.map((work) => work.title)}
+                  initial={{ y: "70%", opacity: 0 }}
+                  exit={{ y: "-50%", opacity: 0.2 }}
+                  transition={{ ease: "easeInOut" }}
+                />
+                <RotatingText
+                  className="absolute text-white/100 mix-blend-overlay text-shadow-[1px] text-shadow-black z-3"
                   rotationInterval={CYCLE_DURATION * 1000}
                   texts={featuredWorks.map((work) => work.title)}
                   initial={{ y: "70%", opacity: 0 }}
@@ -177,7 +186,7 @@ const Home = () => {
           </div>
         )}
         {/* Gallery Button */}
-        <div className="row-start-7 row-end-9 col-start-1 col-end-4 md:col-span-full md:row-start-4 md:row-end-6 relative flex items-center md:pl-6 text-5xl md:text-[9rem] tracking-[2.5vw] overflow-visible">
+        <div className="row-start-8 row-end-10 col-start-1 col-end-4 md:col-span-full md:row-start-4 md:row-end-6 relative flex items-center md:pl-6 text-5xl md:text-[9rem] tracking-[2.5vw] overflow-visible">
           <span
             className="font-bold-inter pl-6 cursor-pointer z-1"
             ref={galleryTextRef}
@@ -186,7 +195,7 @@ const Home = () => {
             GALLERY
           </span>
           <span
-            className="absolute font-bold-inter pl-6 cursor-pointer text-white/100 mix-blend-overlay z-3"
+            className="absolute font-bold-inter pl-6 cursor-pointer text-white/100 mix-blend-overlay text-shadow-xs text-shadow-black z-3"
             onClick={() => navigate("/gallery")}
           >
             GALLERY
@@ -218,6 +227,29 @@ function inverseOverlayBlendWithWhite(hex: string): string {
   const inverse = rgb.map((result) => {
     if (result === 255) return 128; // Any value in [128,255] overlays to 255, pick midpoint
     return Math.round(result / 2);
+  });
+
+  return (
+    "#" +
+    inverse
+      .map((x) => x.toString(16).padStart(2, "0"))
+      .join("")
+      .toUpperCase()
+  );
+}
+
+function inverseColorDodgeWithWhite(hex: string): string {
+  // Convert hex to RGB
+  const rgb = hex
+    .replace("#", "")
+    .match(/.{2}/g)!
+    .map((x) => parseInt(x, 16));
+
+  // For color dodge with white, any value in [128,255] will result in white.
+  // Pick midpoint for visual consistency.
+  const inverse = rgb.map((result) => {
+    if (result >= 128) return 128;
+    return result;
   });
 
   return (
