@@ -1,11 +1,6 @@
 import type { SanityDocument } from "@sanity/client";
 import { client } from "../sanity/client";
-import { useLoaderData } from "react-router-dom";
-import type { PreviewArtPiece } from "../../Types";
-import { urlFor } from "../sanity/utils";
-import ImageCarousel from "../components/molecules/ImageCarousel";
-import RotatingText from "../components/atoms/RotatingText";
-import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
 
 const isMobile = window.innerWidth < 768;
 
@@ -32,24 +27,53 @@ export async function loader() {
 }
 
 const Testing = () => {
+  const dummyArray = [0, 1, 2];
+
+  const CYCLE_DURATION = 4;
+  const totalDuration = CYCLE_DURATION * dummyArray.length;
+  const TRANSITION_TIME = 200;
+
+  const translationArray = Array.from({
+    length: dummyArray.length * 2 + 1,
+  }).map(
+    (_, index) => `-${(100 / dummyArray.length / 2) * Math.floor(index / 2)}%`
+  );
+  const breakpoints = Array.from({ length: dummyArray.length * 2 + 1 }).map(
+    (_, index) => {
+      return index % 2 === 0
+        ? (1 / dummyArray.length) * (index / 2)
+        : (1 / dummyArray.length) * ((index + 1) / 2) - TRANSITION_TIME / (totalDuration * 1000);
+    }
+  );
+
+  console.log(translationArray, breakpoints);
+
   return (
     <>
       <div className="h-screen w-screen flex items-center justify-center bg-red-500/50">
-        <div className="h-120 w-200 flex flex-col items-start justify-start outline-1">
-          {Array.from({ length: 3 }).map((_, index) => (
-            <div className="relative pb-12 -mb-12 flex justify-center items-center" key={index}>
-              <div className="overflow-y-hidden outline-1">
-                <span className="text-xl md:text-5xl tracking-[0.15em] whitespace-nowrap text-white/0">
-                  test
-                </span>
-              </div>
-              <div className="absolute overflow-y-hidden outline-1">
-                <span className="text-xl md:text-5xl tracking-[0.15em] whitespace-nowrap text-white/0">
-                  test
-                </span>
-              </div>
-            </div>
-          ))}
+        <div className="h-120 w-200 grid place-items-center outline-1">
+          <div className="h-40 w-40 outline-1 overflow-hidden">
+            <motion.div
+              className="flex w-max"
+              initial={{ x: 0 }}
+              animate={{ x: translationArray }}
+              transition={{
+                duration: totalDuration,
+                ease: "linear",
+                times: breakpoints,
+                repeat: Infinity,
+              }}
+            >
+              {[...dummyArray, ...dummyArray].map((num, index) => (
+                <div
+                  key={index}
+                  className="h-40 w-40 outline-1 outline-white flex-shrink-0 bg-blue-500/80"
+                >
+                  {num}
+                </div>
+              ))}
+            </motion.div>
+          </div>
         </div>
       </div>
     </>

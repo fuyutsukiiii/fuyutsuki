@@ -23,7 +23,8 @@ const FEATURED_QUERY = `*[_type == "home${isMobile ? "-mobile" : ""}"]{
   }
 }`;
 
-const CYCLE_DURATION = 2;
+const CYCLE_DURATION = 5;
+const TRANSITION_TIME = 0.4;
 
 export async function loader() {
   const result = await client.fetch<{ works: SanityDocument[] }[]>(
@@ -117,6 +118,7 @@ const Home = () => {
               className="h-full w-full z-2"
               cycleDuration={CYCLE_DURATION}
               works={featuredWorks}
+              transitionTime={TRANSITION_TIME}
             />
           </div>
           {/* White border on a different layer for GALLERY text effect */}
@@ -134,7 +136,7 @@ const Home = () => {
           {/* Piece Title (Desktop) */}
           {device === "desktop" && (
             <div
-              className="absolute max-h-full max-w-full z-3 flex flex-col items-end justify-start outline-1"
+              className="absolute max-h-full max-w-full z-3 flex flex-col items-end justify-start"
               style={{
                 width: carouselRef.current
                   ? (carouselRef.current.clientWidth * 100) / 90
@@ -153,7 +155,7 @@ const Home = () => {
                     texts={featuredWorks.map((work) => work.title)}
                     initial={{ y: "70%", opacity: 0 }}
                     exit={{ y: "-50%", opacity: 0.2 }}
-                    transition={{ ease: "easeInOut" }}
+                    transition={{ ease: "easeInOut", duration: TRANSITION_TIME / 2 }}
                   />
                 </div>
               ))}
@@ -171,19 +173,21 @@ const Home = () => {
                 <RotatingText
                   mainClassName="whitespace-nowrap"
                   rotationInterval={CYCLE_DURATION * 1000}
-                  texts={featuredWorks.map((work) => work.title)}
+                  texts={["test", "testtest", "testtesttest", "testtesttesttest"]}
+                  // texts={featuredWorks.map((work) => work.title)}
                   initial={{ y: "70%", opacity: 0 }}
                   exit={{ y: "-50%", opacity: 0.2 }}
-                  transition={{ ease: "easeInOut" }}
+                  transition={{ ease: "easeInOut", duration: TRANSITION_TIME / 2 }}
                 />
                 <RotatingText
                   mainClassName="whitespace-nowrap"
                   className="absolute text-white/100 mix-blend-overlay text-shadow-xs text-shadow-white z-3"
                   rotationInterval={CYCLE_DURATION * 1000}
-                  texts={featuredWorks.map((work) => work.title)}
+                  texts={["test", "testtest", "testtesttest", "testtesttesttest"]}
+                  // texts={featuredWorks.map((work) => work.title)}
                   initial={{ y: "70%", opacity: 0 }}
                   exit={{ y: "-50%", opacity: 0.2 }}
-                  transition={{ ease: "easeInOut" }}
+                  transition={{ ease: "easeInOut", duration: TRANSITION_TIME / 2 }}
                 />
               </div>
             ))}

@@ -8,41 +8,50 @@ interface Props {
   works: PreviewArtPiece[];
   className?: string;
   cycleDuration?: number;
+  transitionTime?: number;
 }
 
-const ImageCarousel = ({ works, className, cycleDuration = 4 }: Props) => {
-  const [time] = useTimer();
-  const currentIndex = Math.floor(time / cycleDuration);
-  const [worksList, setWorksList] = useState([...works, ...works]);
-
+const ImageCarousel = ({
+  works,
+  className,
+  cycleDuration = 4,
+  transitionTime = 0.2,
+}: Props) => {
   const parentRef = useRef<HTMLDivElement>(null);
-  const [parentWidth, setParentWidth] = useState<number>(0);
-  const [parentHeight, setParentHeight] = useState<number>(0);
+  const worksList = [...works, ...works];
+  const totalDuration = cycleDuration * works.length;
 
-  useEffect(() => {
-    if (parentRef.current) {
-      setParentWidth(parentRef.current.clientWidth);
-      setParentHeight(parentRef.current.clientHeight);
-    }
-  }, [parentRef]);
+  const translationArray = Array.from({
+    length: worksList.length + 1,
+  }).map((_, index) => `-${(100 / worksList.length) * Math.floor(index / 2)}%`);
 
-  useEffect(() => {
-    if (currentIndex >= 1) {
-      setWorksList((prev) => [...prev.slice(1), prev[0]]);
+  const breakpoints = Array.from({ length: translationArray.length }).map(
+    (_, index) => {
+      return index % 2 === 0
+        ? (1 / works.length) * (index / 2)
+        : (1 / works.length) * ((index + 1) / 2) -
+            (transitionTime * 1000) / (totalDuration * 1000);
+      // This ternary operator statement normalizes timing to the specified transition time
+      // console.log(translationArray, breakpoints);
+      // ^Use this console log to see how it works
     }
-  }, [currentIndex]);
+  );
+
+  console.log(translationArray, breakpoints);
 
   return (
-    <div
-      className={`${className} overflow-hidden`}
-      ref={parentRef}
-    >
+    <div className={`${className} overflow-hidden`} ref={parentRef}>
       <motion.div
-        className="flex flex-row"
-        initial={{ x: `-${works.length * 100 - 100}%` }}
-        animate={{ x: `-${works.length * 100}%` }}
-        transition={{ ease: "easeInOut", duration: 0.5 }}
-        key={currentIndex}
+        className="flex w-max"
+        initial={{ x: 0 }}
+        animate={{ x: translationArray }}
+        transition={{
+          duration: totalDuration,
+          times: breakpoints,
+          ease: "easeIn",
+          repeat: Infinity,
+          delay: transitionTime // Add a delay here so the carousel doesn't get ahead of the rotating text
+        }}
       >
         {worksList.map((work, index) => (
           <img
@@ -51,8 +60,8 @@ const ImageCarousel = ({ works, className, cycleDuration = 4 }: Props) => {
               .auto("format")
               .fit("fill")
               .quality(100)
-              .width(parentWidth * 2)
-              .height(parentHeight * 2)
+              .width(parentRef.current?.clientWidth || 0)
+              .height(parentRef.current?.clientHeight || 0)
               .url()}
             alt={work.title}
             key={index}
