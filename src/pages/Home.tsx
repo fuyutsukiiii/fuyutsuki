@@ -45,6 +45,7 @@ const Home = () => {
   };
 
   const galleryTextRef = useRef<HTMLSpanElement>(null);
+  const carouselRef = useRef<HTMLDivElement>(null);
 
   const [galleryTextWidth, setGalleryTextWidth] = useState(0);
   const [galleryTextHeight, setGalleryTextHeight] = useState(0);
@@ -78,8 +79,8 @@ const Home = () => {
   return (
     <div className="h-screen w-screen flex bg-primary-gray text-primary-blue overscroll-contain">
       <Grid />
-      {/* Menu */}
       <div className="absolute inset-4 grid grid-rows-[4fr_5fr_3fr_3fr_7fr_7fr_2fr_2fr_4fr] grid-cols-[3fr_2fr_9fr] md:grid-rows-[3fr_1fr_8fr_3fr_2fr] md:grid-cols-[4fr_6fr] z-1 overflow-visible">
+        {/* Menu */}
         <div className="col-span-full md:row-start-1 md:row-end-3 md:pl-12 flex items-center justify-center md:justify-start gap-12">
           {["HOME", "GALLERY", "CONTACT"].map((item) => {
             return (
@@ -94,9 +95,9 @@ const Home = () => {
           })}
         </div>
         {/* Fuyutsuki caption */}
-        <div className="col-start-3 col-end-4 row-start-2 row-end-3 md:col-start-1 md:col-end-2 md:row-start-2 md:row-end-4 flex flex-col justify-center items-start overflow-visible bg-yellow-400/0">
+        <div className="col-start-3 col-end-4 row-start-2 row-end-3 md:col-start-1 md:col-end-2 md:row-start-2 md:row-end-4 flex flex-col justify-center items-start overflow-visible z-3">
           <div className="flex flex-col items-start md:gap-2">
-            <span className="font-helvetica font-bold text-black text-3xl md:text-6xl tracking-wider">
+            <span className="font-helvetica font-bold text-black text-3xl md:text-6xl tracking-wider text-shadow-2xs text-shadow-white/30">
               FUYUTSUKI
             </span>
             <span className="font-helvetica font-light text-xl md:text-4xl italic tracking-widest">
@@ -106,7 +107,10 @@ const Home = () => {
         </div>
         {/* Image Carousel */}
         <div className="relative col-start-2 col-end-4 row-start-4 row-end-8 md:col-start-2 md:col-end-3 md:row-start-2 md:row-end-5 flex items-center justify-center">
-          <div className="w-[95%] md:w-max md:h-[95%] aspect-[1/1.3] md:aspect-[4.5/3] z-2">
+          <div
+            className="max-h-full max-w-full h-[95%] md:h-max md:w-[95%] aspect-[1/1.3] md:aspect-[4.5/3] z-2"
+            ref={carouselRef}
+          >
             <ImageCarousel
               className="h-full w-full z-2"
               cycleDuration={CYCLE_DURATION}
@@ -114,10 +118,30 @@ const Home = () => {
             />
           </div>
           {/* White border on a different layer for GALLERY text effect */}
-          <div className="absolute w-full aspect-[1/1.3] md:h-full md:w-max md:aspect-[4.5/3] bg-white z-1" />
+          <div
+            className="absolute max-h-full max-w-full bg-white z-1"
+            style={{
+              width: carouselRef.current
+                ? (carouselRef.current.clientWidth * 100) / 90
+                : 0,
+              height: carouselRef.current
+                ? (carouselRef.current.clientHeight * 100) / 90
+                : 0,
+            }}
+          />
           {/* Piece Title */}
           {device === "desktop" && (
-            <div className="absolute h-[95%] md:aspect-[4.5/3] z-3  flex flex-col items-end justify-start">
+            <div
+              className="absolute max-h-full max-w-full z-3 flex flex-col items-end justify-start"
+              style={{
+                width: carouselRef.current
+                  ? (carouselRef.current.clientWidth * 100) / 90
+                  : 0,
+                height: carouselRef.current
+                  ? (carouselRef.current.clientHeight * 100) / 90
+                  : 0,
+              }}
+            >
               {Array.from({ length: 3 }).map((_, index) => (
                 <div className="overflow-y-hidden pb-12 -mb-12">
                   <RotatingText

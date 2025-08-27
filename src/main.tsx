@@ -13,8 +13,6 @@ import Piece from "./pages/Piece";
 import Contact from "./pages/Contact";
 import Layout from "./pages/Layout";
 import GlobalWrapper from "./components/templates/GlobalWrapper";
-// import Testing from "./pages/Testing";
-// import OldHome from "./pages/OldHome";
 
 const router = createBrowserRouter([
   {
