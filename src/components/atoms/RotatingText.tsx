@@ -188,13 +188,12 @@ const RotatingText = forwardRef<RotatingTextRef, RotatingTextProps>(
           mainClassName
         )}
         {...rest}
-        layout
         transition={transition}
       >
         <span className="sr-only">{texts[currentTextIndex]}</span>
         <AnimatePresence
           mode={animatePresenceMode}
-          initial={animatePresenceInitial}
+          // initial={animatePresenceInitial}
         >
           <motion.span
             key={currentTextIndex}
@@ -203,7 +202,6 @@ const RotatingText = forwardRef<RotatingTextRef, RotatingTextProps>(
                 ? "flex flex-col w-full"
                 : "flex flex-wrap whitespace-pre-wrap relative"
             )}
-            layout
             aria-hidden="true"
           >
             {elements.map((wordObj, wordIndex, array) => {
