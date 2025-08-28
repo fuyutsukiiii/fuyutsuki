@@ -105,9 +105,9 @@ const Home = () => {
           </div>
         </div>
         {/* Image Carousel */}
-        <div className="outline-1 relative col-start-2 col-end-5 row-start-4 row-end-10 md:col-start-2 md:col-end-3 md:row-start-2 md:row-end-5 flex items-end md:items-center justify-center">
+        <div className="relative col-start-2 col-end-5 row-start-4 row-end-10 md:col-start-2 md:col-end-3 md:row-start-2 md:row-end-5 flex items-end md:items-center justify-center">
           <div
-            className="outline-1 max-h-full max-w-full h-[95%] md:h-max md:max-h-[95%] md:w-[95%] aspect-[1/1.4] z-2"
+            className="max-h-full max-w-full h-[95%] md:h-max md:max-h-[95%] md:w-[95%] aspect-[1/1.4] z-2"
             ref={carouselRef}
           >
             <ImageCarousel
