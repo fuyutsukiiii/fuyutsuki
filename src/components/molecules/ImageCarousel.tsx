@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useRef} from "react";
+import { useRef } from "react";
 import type { PreviewArtPiece } from "../../../Types";
 import { urlFor } from "../../sanity/utils";
 
@@ -39,7 +39,7 @@ const ImageCarousel = ({
   return (
     <div className={`${className} overflow-hidden`} ref={parentRef}>
       <motion.div
-        className="flex w-max"
+        className="flex h-full w-max"
         initial={{ x: 0 }}
         animate={{ x: translationArray }}
         transition={{
@@ -47,7 +47,7 @@ const ImageCarousel = ({
           times: breakpoints,
           ease: "easeIn",
           repeat: Infinity,
-          delay: transitionTime // Add a delay here so the carousel doesn't get ahead of the rotating text
+          delay: transitionTime, // Add a delay here so the carousel doesn't get ahead of the rotating text
         }}
       >
         {worksList.map((work, index) => (
@@ -55,10 +55,9 @@ const ImageCarousel = ({
             className="object-cover"
             src={urlFor(work.images[0])
               .auto("format")
-              .fit("fill")
               .quality(100)
-              .width(parentRef.current?.clientWidth || 0)
-              .height(parentRef.current?.clientHeight || 0)
+              .width(parentRef.current?.clientWidth || 800)
+              .height(parentRef.current?.clientHeight || 600)
               .url()}
             alt={work.title}
             key={index}
