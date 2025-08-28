@@ -16,7 +16,7 @@ const PieceInfo = ({ title, date }: Props) => {
 
     const rect = ref.current.getBoundingClientRect();
     setParentWidth(rect.width);
-  }, [ref]);
+  }, [ref.current]);
 
   useEffect(() => {
     if (!ref.current) return;

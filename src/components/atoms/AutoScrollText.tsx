@@ -60,6 +60,7 @@ const AutoScrollText = ({
         className={`${className} pr-1`}
         initial={{ x: 0 }}
         animate={{ x: shouldScroll ? overflow : 0 }}
+        key={parentWidth}
         transition={{
           duration: duration,
           ease: "linear",

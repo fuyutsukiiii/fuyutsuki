@@ -22,17 +22,19 @@ const GlobalWrapper = () => {
     };
 
     const getAllPieces = async () => {
-      const ALL_PIECES_QUERY = `*[_type == "art"]{
-        title,
-        date,
-        description,
-        "images": images[],
-        slug
+      const ALL_VISIBLE_PIECES_QUERY = `*[_type == "gallery"]{
+        works[]->{
+          title,
+          date,
+          description,
+          "images": images[],
+          slug,
+        }
       }`;
 
-      const allPieces = (await client.fetch(
-        ALL_PIECES_QUERY
-      )) as FullPieceWithSlug[];
+      const result = await client.fetch(ALL_VISIBLE_PIECES_QUERY);
+      console.log(result);
+      const allPieces = result[0].works as FullPieceWithSlug[];
 
       const allProcessedPieces = allPieces.map((piece) => ({
         ...piece,
