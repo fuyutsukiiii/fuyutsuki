@@ -169,7 +169,7 @@ const Home = () => {
                 key={index}
               >
                 <RotatingText
-                  mainClassName="whitespace-nowrap"
+                  mainClassName="whitespace-nowrap z-3 text-shadow-white/30 text-shadow-2xs"
                   rotationInterval={CYCLE_DURATION * 1000}
                   texts={featuredWorks.map((work) => work.title)}
                   initial={{ y: "70%", opacity: 0 }}
@@ -179,7 +179,7 @@ const Home = () => {
                     duration: TRANSITION_TIME / 2,
                   }}
                 />
-                <RotatingText
+                {/* <RotatingText
                   mainClassName="whitespace-nowrap"
                   className="absolute text-white/100 mix-blend-overlay text-shadow-xs text-shadow-white z-3"
                   rotationInterval={CYCLE_DURATION * 1000}
@@ -190,7 +190,7 @@ const Home = () => {
                     ease: "easeInOut",
                     duration: TRANSITION_TIME / 2,
                   }}
-                />
+                /> */}
               </div>
             ))}
           </div>
