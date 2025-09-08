@@ -15,7 +15,7 @@ import {
   type Target,
   type TargetAndTransition,
 } from "framer-motion";
-import { DeviceContext } from "../templates/GlobalWrapper";
+import { DeviceContext } from "../wrappers/GlobalWrapper";
 
 function cn(...classes: (string | undefined | null | boolean)[]): string {
   return classes.filter(Boolean).join(" ");
@@ -207,7 +207,15 @@ const RotatingText = forwardRef<RotatingTextRef, RotatingTextProps>(
                 : "flex flex-wrap whitespace-pre-wrap relative"
             )}
             aria-hidden="true"
-            style={device === "mobile" ? { letterSpacing: `${texts[currentTextIndex].length < 11 ? 1.1 : 0.15}em` } : {}}
+            style={
+              device === "mobile"
+                ? {
+                    letterSpacing: `${
+                      texts[currentTextIndex].length < 11 ? 1.1 : 0.18
+                    }em`,
+                  }
+                : {}
+            }
           >
             {elements.map((wordObj, wordIndex, array) => {
               const previousCharsCount = array

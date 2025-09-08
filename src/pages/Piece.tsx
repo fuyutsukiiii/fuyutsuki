@@ -4,75 +4,7 @@ import ImageStack from "../components/organisms/ImageStack";
 import NextImagePreview from "../components/organisms/NextImagePreview";
 import { PortableText } from "@portabletext/react";
 import GrayGrid from "../components/organisms/GrayGrid";
-import { PiecesContext } from "../components/templates/GlobalWrapper";
-
-// export async function loader({ params }: { params: { pieceSlug?: string } }) {
-//   const pieceSlug = params.pieceSlug;
-//   if (!pieceSlug) {
-//     window.location.href = "/home";
-//   }
-//   const PIECE_QUERY = `*[_type == "art" && slug.current == "${pieceSlug}"][0]{
-//     title,
-//     date,
-//     description,
-//     "images": images[],
-//   }`;
-//   const piece = (await client.fetch(PIECE_QUERY)) as FullPiece;
-//   if (!piece) {
-//     window.location.href = "/home";
-//   }
-
-//   const urls = piece.images.map((image) => {
-//     return urlFor(image)
-//       .auto("format")
-//       .quality(70)
-//       .fit("clip")
-//       .maxWidth(window.innerWidth)
-//       .maxHeight(window.innerHeight)
-//       .url();
-//   });
-
-//   try {
-//     const nextPiece = await getNextPiece(piece);
-//     return {
-//       title: piece.title,
-//       date: piece.date,
-//       description: piece.description,
-//       pieceUrls: urls,
-//       nextPieceUrl: nextPiece.slug.current,
-//     };
-//   } catch {
-//     throw new Response("Next piece not found", { status: 404 });
-//   }
-// }
-
-// async function getNextPiece(currentPiece: FullPiece): Promise<PreviewArtPiece> {
-//   const GALLERY_QUERY = `*[_type == "gallery"]{
-//     works[]->{
-//         _id,
-//         title,
-//         date,
-//         slug,
-//         "images": images[],
-//         }
-//     }`;
-
-//   const result = await client.fetch<{ works: SanityDocument[] }[]>(
-//     GALLERY_QUERY
-//   );
-//   const { works } = result[0] as any;
-//   const galleryWorks = works as PreviewArtPiece[];
-
-//   const currentPieceIndex = galleryWorks.findIndex(
-//     (work) => work.title === currentPiece.title
-//   );
-//   if (currentPieceIndex === -1) {
-//     // Should never happen unless the url is invalid
-//     throw new Error("Piece not found.");
-//   }
-
-//   return galleryWorks[(currentPieceIndex + 1) % galleryWorks.length];
-// }
+import { PiecesContext } from "../components/wrappers/GlobalWrapper";
 
 // Wrapping the piece page with a component with a key to force re-rendering
 const Piece = () => {
@@ -140,7 +72,7 @@ const PieceContent = () => {
   return (
     <>
       <div
-        className="relative h-screen w-screen bg-primary-gray overflow-y-scroll snap-y snap-mandatory overscroll-contain"
+        className="relative h-screen w-screen bg-primary-gray overflow-y-scroll no-scrollbar snap-y snap-mandatory overscroll-contain"
         ref={pageScrollRef}
       >
         <GrayGrid horizontal={true} />
@@ -157,7 +89,7 @@ const PieceContent = () => {
           <ImageStack urls={pieceUrls} scrollRef={pageScrollRef} />
           <NextImagePreview progress={percentToNextPiece * 100} />
         </div>
-        <div className="h-[12.5vmax] w-screen" ref={scrollBufferRef} />
+        <div className="h-[12.5vh] w-screen" ref={scrollBufferRef} />
       </div>
     </>
   );

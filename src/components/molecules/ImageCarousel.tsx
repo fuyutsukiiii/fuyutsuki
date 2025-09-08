@@ -8,6 +8,8 @@ interface Props {
   className?: string;
   cycleDuration?: number;
   transitionTime?: number;
+  width: number;
+  height: number;
 }
 
 const ImageCarousel = ({
@@ -15,6 +17,8 @@ const ImageCarousel = ({
   className,
   cycleDuration = 4,
   transitionTime = 0.2,
+  width,
+  height,
 }: Props) => {
   const parentRef = useRef<HTMLDivElement>(null);
   const worksList = [...works, ...works];
@@ -53,11 +57,12 @@ const ImageCarousel = ({
         {worksList.map((work, index) => (
           <img
             className="object-cover"
+            style={{ width: width, height: height }}
             src={urlFor(work.images[0])
               .auto("format")
               .quality(100)
-              .width(parentRef.current?.clientWidth || 800)
-              .height(parentRef.current?.clientHeight || 600)
+              .height(height * 3)
+              .width(width * 3)
               .url()}
             alt={work.title}
             key={index}

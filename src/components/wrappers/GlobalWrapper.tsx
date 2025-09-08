@@ -42,7 +42,7 @@ const GlobalWrapper = () => {
         urls: piece.images.map((image) => {
           return urlFor(image)
             .auto("format")
-            .quality(70)
+            .quality(100)
             .fit("clip")
             .maxWidth(window.innerWidth)
             .maxHeight(window.innerHeight)

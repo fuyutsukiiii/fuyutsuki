@@ -8,7 +8,7 @@ import GalleryImage from "../components/atoms/GalleryImage";
 import PieceInfo from "../components/molecules/PieceInfo";
 import GrayGrid from "../components/organisms/GrayGrid";
 import { motion } from "framer-motion";
-import { DeviceContext } from "../components/templates/GlobalWrapper";
+import { DeviceContext } from "../components/wrappers/GlobalWrapper";
 
 const GALLERY_QUERY = `*[_type == "gallery"]{
   works[]->{

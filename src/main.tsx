@@ -12,13 +12,17 @@ import Gallery from "./pages/Gallery";
 import Piece from "./pages/Piece";
 import Contact from "./pages/Contact";
 import Layout from "./pages/Layout";
-import GlobalWrapper from "./components/templates/GlobalWrapper";
+import GlobalWrapper from "./components/wrappers/GlobalWrapper";
+import Testing from "./pages/Testing";
+import LoadingAnimation from "./components/wrappers/LoadingAnimation";
 
 const router = createBrowserRouter([
   {
     element: <GlobalWrapper />,
     errorElement: <></>,
-    hydrateFallbackElement: <div className="h-screen w-screen bg-primary-gray" />,
+    hydrateFallbackElement: (
+      <div className="h-screen w-screen bg-primary-gray" />
+    ),
     children: [
       {
         element: <Layout />,
@@ -47,10 +51,10 @@ const router = createBrowserRouter([
           },
         ],
       },
-      // {
-      //   path: "testing",
-      //   element: <Testing />,
-      // },
+      {
+        path: "testing",
+        element: <Testing />,
+      },
       // {
       //   path: "/old-home",
       //   element: <OldHome />,
@@ -58,7 +62,11 @@ const router = createBrowserRouter([
       // },
       {
         path: "/home",
-        element: <Home />,
+        element: (
+          <LoadingAnimation>
+            <Home />
+          </LoadingAnimation>
+        ),
         loader: homeLoader,
       },
       {

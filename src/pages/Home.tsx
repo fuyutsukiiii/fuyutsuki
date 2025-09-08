@@ -7,7 +7,8 @@ import GalleryButton from "../components/molecules/GalleryButton";
 import ImageCarousel from "../components/molecules/ImageCarousel";
 import type { PreviewArtPiece } from "../../Types";
 import RotatingText from "../components/atoms/RotatingText";
-import { DeviceContext } from "../components/templates/GlobalWrapper";
+import { DeviceContext } from "../components/wrappers/GlobalWrapper";
+import HomeMenu from "../components/organisms/HomeMenu";
 
 const isMobile = window.innerWidth < 768;
 
@@ -78,20 +79,9 @@ const Home = () => {
   return (
     <div className="h-screen w-screen flex bg-primary-gray text-primary-blue overscroll-contain">
       <Grid />
-      <div className="absolute left-4 top-4 bottom-8 right-8 md:inset-4 grid grid-rows-[4fr_5fr_3fr_3fr_7fr_7fr_2fr_2fr_4fr] grid-cols-[3fr_2fr_1fr_9fr] md:grid-rows-[3fr_1fr_8fr_3fr_2fr] md:grid-cols-[4fr_6fr] z-1 overflow-visible">
-        {/* Menu */}
-        <div className="col-span-full md:row-start-1 md:row-end-3 md:pl-12 flex items-center justify-center md:justify-start gap-12">
-          {["HOME", "GALLERY", "CONTACT"].map((item) => {
-            return (
-              <span
-                key={item}
-                className="font-optima font-bold md:text-3xl cursor-pointer"
-                onClick={() => navigate(`/${item.toLowerCase()}`)}
-              >
-                {item}
-              </span>
-            );
-          })}
+      <div className="absolute left-4 top-4 bottom-8 right-8 md:inset-4 grid grid-rows-[3fr_7fr_3fr_3fr_7fr_7fr_2fr_2fr_4fr] grid-cols-[3fr_2fr_1fr_9fr] md:grid-rows-[3fr_1fr_8fr_3fr_2fr] md:grid-cols-[4fr_6fr] z-1 overflow-visible">
+        <div className="col-span-full md:row-start-1 md:row-end-3 md:pl-12 flex items-end md:items-center justify-center md:justify-start gap-12">
+          <HomeMenu />
         </div>
         {/* Fuyutsuki caption */}
         <div className="col-start-3 col-end-5 row-start-2 row-end-3 md:col-start-1 md:col-end-2 md:row-start-2 md:row-end-4 flex flex-col justify-center items-start overflow-visible z-3">
@@ -105,21 +95,24 @@ const Home = () => {
           </div>
         </div>
         {/* Image Carousel */}
-        <div className="relative col-start-2 col-end-5 row-start-4 row-end-10 md:col-start-2 md:col-end-3 md:row-start-2 md:row-end-5 flex items-end md:items-center justify-center">
+        <div className="relative col-start-2 col-end-5 row-start-3 row-end-8 md:col-start-2 md:col-end-3 md:row-start-2 md:row-end-5 flex items-end md:items-center justify-center">
+          <div className="absolute h-full w-full" />
           <div
-            className="max-h-full max-w-full h-[95%] md:h-max md:max-h-[95%] md:w-[95%] aspect-[1/1.4] z-2"
+            className="h-full w-full mx-8 md:m-0 md:h-max md:max-h-[95%] md:w-[95%] aspect-[1/1.4] z-2"
             ref={carouselRef}
           >
             <ImageCarousel
-              className="h-full w-full z-2"
+              className="h-full w-full z-2 outline-6 md:outline-0 outline-white"
               cycleDuration={CYCLE_DURATION}
               works={featuredWorks}
               transitionTime={TRANSITION_TIME}
+              width={carouselRef.current?.clientWidth || 0}
+              height={carouselRef.current?.clientHeight || 0}
             />
           </div>
           {/* White border on a different layer for GALLERY text effect */}
           <div
-            className="absolute md:max-h-full md:max-w-full md:bg-white z-1"
+            className="absolute max-h-full max-w-full bg-white z-1"
             style={{
               width: carouselRef.current
                 ? (carouselRef.current.clientWidth * 100) / 90
@@ -145,7 +138,7 @@ const Home = () => {
               {Array.from({ length: 3 }).map((_, index) => (
                 <div className="overflow-y-hidden pb-12 -mb-12" key={index}>
                   <RotatingText
-                    className="md:text-5xl tracking-widest text-shadow-xs text-shadow-white/30"
+                    className="md:text-5xl tracking-widest font-optima"
                     rotationInterval={CYCLE_DURATION * 1000}
                     texts={featuredWorks.map((work) => work.title)}
                     initial={{ y: "70%", opacity: 0 }}
@@ -169,7 +162,7 @@ const Home = () => {
                 key={index}
               >
                 <RotatingText
-                  mainClassName="whitespace-nowrap z-3 text-shadow-white/30 text-shadow-2xs"
+                  mainClassName="whitespace-nowrap z-3 font-optima font-bold"
                   rotationInterval={CYCLE_DURATION * 1000}
                   texts={featuredWorks.map((work) => work.title)}
                   initial={{ y: "70%", opacity: 0 }}
@@ -179,18 +172,6 @@ const Home = () => {
                     duration: TRANSITION_TIME / 2,
                   }}
                 />
-                {/* <RotatingText
-                  mainClassName="whitespace-nowrap"
-                  className="absolute text-white/100 mix-blend-overlay text-shadow-xs text-shadow-white z-3"
-                  rotationInterval={CYCLE_DURATION * 1000}
-                  texts={featuredWorks.map((work) => work.title)}
-                  initial={{ y: "70%", opacity: 0 }}
-                  exit={{ y: "-50%", opacity: 0.2 }}
-                  transition={{
-                    ease: "easeInOut",
-                    duration: TRANSITION_TIME / 2,
-                  }}
-                /> */}
               </div>
             ))}
           </div>

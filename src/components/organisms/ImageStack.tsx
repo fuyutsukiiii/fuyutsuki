@@ -7,7 +7,7 @@ import {
   useState,
   type RefObject,
 } from "react";
-import { DeviceContext } from "../templates/GlobalWrapper";
+import { DeviceContext } from "../wrappers/GlobalWrapper";
 
 interface Props {
   urls: string[];
@@ -134,7 +134,7 @@ const ImageStack = ({ urls, scrollRef }: Props) => {
             {zoomedUrl == url && (
               <div
                 key={url + "-zoomed"}
-                className="fixed inset-0 z-50 bg-black/90 overflow-auto z-9999"
+                className="fixed inset-0 bg-black/90 overflow-auto z-9999"
                 style={{ cursor: "zoom-out" }}
                 onClick={() => setZoomedUrl(null)}
               >

@@ -28,6 +28,13 @@ const ExpandingDiv = ({
 
       if (divRef.current) {
         const rect = divRef.current.getBoundingClientRect();
+        const divTop = rect.top;
+        const divBottom = rect.bottom;
+        // If the div is completely out of view + a slight margin, skip calculations
+        if (divBottom < 0 - window.innerHeight * 0.1 || divTop > window.innerHeight * 1.1) {
+          return;
+        }
+
         const divMidline = rect.y + rect.height / 2;
         const windowMidline = window.innerHeight / 2;
 
@@ -38,7 +45,7 @@ const ExpandingDiv = ({
         }
         const normalizedDistance =
           Math.abs(signedDistance) / window.innerHeight;
-        // Check https://www.desmos.com/calculator/mk6vmleeeq for visualization
+        // Check https://www.desmos.com/calculator/mk6vmleeeq for visualization of scale
         const scale = Math.max(
           Math.exp(-20 * normalizedDistance * normalizedDistance),
           0.2 - normalizedDistance / 100

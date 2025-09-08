@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { Menu } from "../components/organisms/Menu";
-import CrossfadeWrapper from "../components/templates/CrossfadeWrapper";
+import CrossfadeWrapper from "../components/wrappers/CrossfadeWrapper";
 
 interface Props {
   children?: React.ReactNode;
