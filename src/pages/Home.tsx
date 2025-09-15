@@ -9,6 +9,7 @@ import type { PreviewArtPiece } from "../../Types";
 import RotatingText from "../components/atoms/RotatingText";
 import { DeviceContext } from "../components/wrappers/GlobalWrapper";
 import HomeMenu from "../components/organisms/HomeMenu";
+import BouncingArrow from "../components/atoms/BouncingArrow";
 
 const isMobile = window.innerWidth < 768;
 
@@ -231,7 +232,12 @@ const Home = () => {
           )}
           {/* Gallery Scroll (Mobile) */}
           {device === "mobile" && (
-            <div className="col-start-1 col-end-5 row-start-8 row-end-10 outline-1"></div>
+            <div className="col-start-1 col-end-5 row-start-8 row-end-10 flex flex-col items-center justify-center">
+              <span className="font-bold-inter text-3xl tracking-[1rem]">
+                GALLERY
+              </span>
+              <BouncingArrow bounce={navigatePercentScroll < 0.5} />
+            </div>
           )}
         </div>
       </div>
