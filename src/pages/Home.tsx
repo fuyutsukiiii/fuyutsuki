@@ -232,10 +232,10 @@ const Home = () => {
           )}
           {/* Gallery Scroll (Mobile) */}
           {device === "mobile" && (
-            <div className="col-start-1 col-end-5 row-start-8 row-end-10 flex flex-col items-center justify-center">
-              <span className="font-bold-inter text-3xl tracking-[1rem]">
+            <div className="col-start-1 col-end-5 row-start-8 row-end-10 flex flex-col items-center justify-end pb-4 gap-1">
+              <div className="font-bold-inter text-3xl tracking-[1rem] text-center p-0 m-0">
                 GALLERY
-              </span>
+              </div>
               <BouncingArrow bounce={navigatePercentScroll < 0.5} />
             </div>
           )}
