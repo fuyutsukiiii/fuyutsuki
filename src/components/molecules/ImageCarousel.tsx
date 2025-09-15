@@ -1,10 +1,10 @@
 import { motion } from "framer-motion";
 import { useRef } from "react";
-import type { PreviewArtPiece } from "../../../Types";
+import type { HomePiece } from "../../../Types";
 import { urlFor } from "../../sanity/utils";
 
 interface Props {
-  works: PreviewArtPiece[];
+  works: HomePiece[];
   className?: string;
   cycleDuration?: number;
   transitionTime?: number;

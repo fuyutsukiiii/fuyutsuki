@@ -1,6 +1,8 @@
 import type { SanityDocument } from "@sanity/client";
 import { client } from "../sanity/client";
 import { motion } from "framer-motion";
+import ToggleMenu from "../components/organisms/ToggleMenu";
+import { useEffect, useRef, useState } from "react";
 
 const isMobile = window.innerWidth < 768;
 
@@ -27,36 +29,30 @@ export async function loader() {
 }
 
 const Testing = () => {
-  const dummyArray = [0, 1, 2];
+  const ref = useRef<HTMLSpanElement>(null);
+  const [menuButtonWidth, setMenuButtonWidth] = useState(0);
+  const [menuButtonHeight, setMenuButtonHeight] = useState(0);
 
-  const CYCLE_DURATION = 4;
-  const totalDuration = CYCLE_DURATION * dummyArray.length;
-  const TRANSITION_TIME = 200;
-
-  const translationArray = Array.from({
-    length: dummyArray.length * 2 + 1,
-  }).map(
-    (_, index) => `-${(100 / dummyArray.length / 2) * Math.floor(index / 2)}%`
-  );
-  const breakpoints = Array.from({ length: dummyArray.length * 2 + 1 }).map(
-    (_, index) => {
-      return index % 2 === 0
-        ? (1 / dummyArray.length) * (index / 2)
-        : (1 / dummyArray.length) * ((index + 1) / 2) -
-            TRANSITION_TIME / (totalDuration * 1000);
+  useEffect(() => {
+    if (ref.current) {
+      setMenuButtonWidth(ref.current.offsetWidth);
+      setMenuButtonHeight(ref.current.offsetHeight);
     }
-  );
-
-  console.log(translationArray, breakpoints);
+  }, [ref.current]);
 
   return (
-    <>
-      <div className="h-screen w-screen flex items-center justify-center">
-        <div className="h-50 w-50 outline-1 flex items-center justify-center">
-          <div className="bg-green-500 h-full w-full m-8 " />
-        </div>
+    <div className="h-screen w-screen flex items-center justify-center">
+      <div className="h-[50%] w-[50%] outline-1 flex items-center justify-center">
+        <ToggleMenu
+          menuButtonWidth={menuButtonWidth}
+          menuButtonHeight={menuButtonHeight}
+        >
+          <span ref={ref}>Menu</span>
+          <span>Menu</span>
+          <span>Menu</span>
+        </ToggleMenu>
       </div>
-    </>
+    </div>
   );
 };
 

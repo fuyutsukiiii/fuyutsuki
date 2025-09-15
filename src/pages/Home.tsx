@@ -5,22 +5,19 @@ import Grid from "../components/organisms/Grid";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import GalleryButton from "../components/molecules/GalleryButton";
 import ImageCarousel from "../components/molecules/ImageCarousel";
-import type { PreviewArtPiece } from "../../Types";
+import type { HomePiece } from "../../Types";
 import RotatingText from "../components/atoms/RotatingText";
 import { DeviceContext } from "../components/wrappers/GlobalWrapper";
-import HomeMenu from "../components/organisms/HomeMenu";
 import BouncingArrow from "../components/atoms/BouncingArrow";
+import ToggleMenu from "../components/organisms/ToggleMenu";
 
 const isMobile = window.innerWidth < 768;
 
 const FEATURED_QUERY = `*[_type == "home${isMobile ? "-mobile" : ""}"]{
   works[]->{
-    primary->{
-      _id,
-      title,
-      images
-    },
-    background,
+    _id,
+    title,
+    images
   }
 }`;
 
@@ -32,10 +29,10 @@ export async function loader() {
     FEATURED_QUERY
   );
   const { works } = result[0];
-  const backgrounds = works.map((work) => work.background);
-  const featuredWorks = works.map((work) => work.primary);
 
-  return { backgrounds, featuredWorks };
+  console.log(works);
+
+  return { works };
 }
 
 const Home = () => {
@@ -43,9 +40,7 @@ const Home = () => {
 
   const navigate = useNavigate();
 
-  const { featuredWorks } = useLoaderData() as {
-    featuredWorks: PreviewArtPiece[];
-  };
+  const { works } = useLoaderData() as { works: HomePiece[] };
 
   const galleryTextRef = useRef<HTMLSpanElement>(null);
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -65,7 +60,6 @@ const Home = () => {
         const intersectionRatio = element.intersectionRatio;
         setNavigatePercentScroll(intersectionRatio);
         if (intersectionRatio >= 0.95) {
-          console.log("hit");
           navigate("/gallery");
         }
       },
@@ -108,8 +102,10 @@ const Home = () => {
       <div className="relative flex-shrink-0 h-screen w-screen flex flex-col bg-primary-gray text-primary-blue overscroll-contain snap-end">
         <Grid />
         <div className="absolute left-4 top-4 bottom-8 right-4 md:inset-4 grid grid-rows-[3fr_7fr_3fr_3fr_7fr_7fr_2fr_2fr_4fr] grid-cols-[3fr_2fr_1fr_9fr] md:grid-rows-[3fr_1fr_8fr_3fr_2fr] md:grid-cols-[4fr_6fr] z-1 overflow-visible">
-          <div className="col-span-full md:row-start-1 md:row-end-3 md:pl-12 flex items-end md:items-center justify-center md:justify-start gap-12">
-            <HomeMenu />
+          <div className="col-span-full md:row-start-1 md:row-end-3 md:pl-12 flex items-end justify-center md:items-center md:justify-start gap-12">
+            <div className="w-[80%] md:w-[40%] font-optima font-bold text-lg md:text-3xl">
+              <ToggleMenu />
+            </div>
           </div>
           {/* Fuyutsuki caption */}
           <div className="col-start-3 col-end-5 row-start-2 row-end-3 md:col-start-1 md:col-end-2 md:row-start-2 md:row-end-4 flex flex-col justify-center items-start overflow-visible z-3">
@@ -123,7 +119,7 @@ const Home = () => {
             </div>
           </div>
           {/* Image Carousel */}
-          <div className="relative col-start-2 col-end-5 row-start-3 row-end-8 md:col-start-2 md:col-end-3 md:row-start-2 md:row-end-5 flex items-end md:items-center justify-center">
+          <div className="relative col-start-2 col-end-5 row-start-3 row-end-8 md:col-start-2 md:col-end-3 md:row-start-2 md:row-end-5 flex items-end md:items-center justify-center md:mr-8">
             <div className="absolute h-full w-full" />
             <div
               className="h-full w-full mx-8 md:m-0 md:h-max md:max-h-[95%] md:w-[95%] aspect-[1/1.4] z-2"
@@ -132,7 +128,7 @@ const Home = () => {
               <ImageCarousel
                 className="h-full w-full z-2 outline-6 md:outline-0 outline-white"
                 cycleDuration={CYCLE_DURATION}
-                works={featuredWorks}
+                works={works}
                 transitionTime={TRANSITION_TIME}
                 width={carouselRef.current?.clientWidth || 0}
                 height={carouselRef.current?.clientHeight || 0}
@@ -151,7 +147,7 @@ const Home = () => {
               }}
             />
             {/* Piece Title (Desktop) */}
-            {device === "desktop" && (
+            {/* {device === "desktop" && (
               <div
                 className="absolute max-h-full max-w-full z-3 flex flex-col items-end justify-start"
                 style={{
@@ -168,7 +164,7 @@ const Home = () => {
                     <RotatingText
                       className="md:text-5xl tracking-widest font-optima"
                       rotationInterval={CYCLE_DURATION * 1000}
-                      texts={featuredWorks.map((work) => work.title)}
+                      texts={works.map((work) => work.title)}
                       initial={{ y: "70%", opacity: 0 }}
                       exit={{ y: "-50%", opacity: 0.2 }}
                       transition={{
@@ -179,11 +175,11 @@ const Home = () => {
                   </div>
                 ))}
               </div>
-            )}
+            )} */}
           </div>
           {/* Piece Title (Mobile) */}
           {device === "mobile" && (
-            <div className="row-start-5 row-end-6 col-start-1 col-end-5 flex flex-col items-start justify-start overflow-visible">
+            <div className="relative row-start-6 row-end-7 col-start-1 col-end-5 md:col-start-2 md:col-end-3 md:row-start-2 md:row-end-5 md:outline-1 flex flex-col items-start justify-start gap-[1.1em] overflow-visible">
               {Array.from({ length: 3 }).map((_, index) => (
                 <div
                   className="relative overflow-y-hidden pb-12 -mb-12 flex justify-center items-center text-xl md:text-5xl tracking-[0.15em] whitespace-nowrap"
@@ -192,7 +188,7 @@ const Home = () => {
                   <RotatingText
                     mainClassName="whitespace-nowrap z-3 font-optima font-bold"
                     rotationInterval={CYCLE_DURATION * 1000}
-                    texts={featuredWorks.map((work) => work.title)}
+                    texts={works.map((work) => work.title)}
                     initial={{ y: "70%", opacity: 0 }}
                     exit={{ y: "-50%", opacity: 0.2 }}
                     transition={{

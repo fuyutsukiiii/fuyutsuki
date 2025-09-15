@@ -10,6 +10,12 @@ export interface PreviewArtPiece {
   images: object[];
 }
 
+export interface HomePiece {
+  _id: string;
+  title: string;
+  images: object[];
+}
+
 export interface FullPiece {
   title: string;
   date: string;
