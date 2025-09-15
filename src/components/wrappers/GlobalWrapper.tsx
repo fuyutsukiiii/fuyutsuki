@@ -33,7 +33,6 @@ const GlobalWrapper = () => {
       }`;
 
       const result = await client.fetch(ALL_VISIBLE_PIECES_QUERY);
-      console.log(result);
       const allPieces = result[0].works as FullPieceWithSlug[];
 
       const allProcessedPieces = allPieces.map((piece) => ({

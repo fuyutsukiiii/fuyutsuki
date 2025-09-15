@@ -64,7 +64,7 @@ const Home = () => {
         const intersectionRatio = element.intersectionRatio;
         setNavigatePercentScroll(intersectionRatio);
         if (intersectionRatio >= 0.95) {
-          console.log("hit")
+          console.log("hit");
           navigate("/gallery");
         }
       },
@@ -204,31 +204,35 @@ const Home = () => {
             </div>
           )}
           {/* Gallery Button (Desktop) */}
-          <div className="row-start-9 row-end-10 col-start-1 col-end-5 md:col-span-full md:row-start-4 md:row-end-6 relative flex items-center md:pl-6 text-5xl md:text-[9rem] tracking-[2.5vw] overflow-visible">
-            <span
-              className="font-bold-inter pl-6 cursor-pointer z-1"
-              ref={galleryTextRef}
-              style={{ color: inverseOverlayBlendWithWhite("#0023E7") }}
-            >
-              GALLERY
-            </span>
-            <span
-              className="absolute font-bold-inter pl-6 cursor-pointer text-white/100 mix-blend-overlay text-shadow-xs text-shadow-white z-3"
-              onClick={() => navigate("/gallery")}
-            >
-              GALLERY
-            </span>
-            <GalleryButton
-              className="absolute font-bold-inter md:text-[9rem] tracking-[2.5vw] flex items-center z-3"
-              text="GALLERY"
-              width={galleryTextRef.current?.clientWidth || 0}
-              height={galleryTextRef.current?.clientHeight || 0}
-              backgroundColor="#0023E7"
-              onClick={() => navigate("/gallery")}
-            />
-          </div>
+          {device === "desktop" && (
+            <div className="row-start-9 row-end-10 col-start-1 col-end-5 md:col-span-full md:row-start-4 md:row-end-6 relative flex items-center md:pl-6 text-5xl md:text-[9rem] tracking-[2.5vw] overflow-visible">
+              <span
+                className="font-bold-inter pl-6 cursor-pointer z-1"
+                ref={galleryTextRef}
+                style={{ color: inverseOverlayBlendWithWhite("#0023E7") }}
+              >
+                GALLERY
+              </span>
+              <span
+                className="absolute font-bold-inter pl-6 cursor-pointer text-white/100 mix-blend-overlay text-shadow-xs text-shadow-white z-3"
+                onClick={() => navigate("/gallery")}
+              >
+                GALLERY
+              </span>
+              <GalleryButton
+                className="absolute font-bold-inter md:text-[9rem] tracking-[2.5vw] flex items-center z-3"
+                text="GALLERY"
+                width={galleryTextRef.current?.clientWidth || 0}
+                height={galleryTextRef.current?.clientHeight || 0}
+                backgroundColor="#0023E7"
+                onClick={() => navigate("/gallery")}
+              />
+            </div>
+          )}
           {/* Gallery Scroll (Mobile) */}
-          <div className="col-start-1 col-end-5 row-start-8 row-end-10 outline-1"></div>
+          {device === "mobile" && (
+            <div className="col-start-1 col-end-5 row-start-8 row-end-10 outline-1"></div>
+          )}
         </div>
       </div>
       <div className="w-screen h-[7.5vh] md:w-0 md:h-0" ref={scrollBufferRef} />
