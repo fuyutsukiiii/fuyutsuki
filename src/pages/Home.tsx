@@ -21,7 +21,7 @@ const FEATURED_QUERY = `*[_type == "home${isMobile ? "-mobile" : ""}"]{
   }
 }`;
 
-const CYCLE_DURATION = 5;
+const CYCLE_DURATION = 0.9;
 const TRANSITION_TIME = 0.4;
 
 export async function loader() {
@@ -119,7 +119,7 @@ const Home = () => {
             </div>
           </div>
           {/* Image Carousel */}
-          <div className="relative col-start-2 col-end-5 row-start-3 row-end-8 md:col-start-2 md:col-end-3 md:row-start-2 md:row-end-5 flex items-end md:items-center justify-center md:mr-8">
+          <div className="relative col-start-2 col-end-5 row-start-3 row-end-8 md:col-start-2 md:col-end-3 md:row-start-2 md:row-end-5 flex items-end md:items-center justify-center md:mr-12">
             <div className="absolute h-full w-full" />
             <div
               className="h-full w-full mx-8 md:m-0 md:h-max md:max-h-[95%] md:w-[95%] aspect-[1/1.4] z-2"
@@ -146,63 +146,31 @@ const Home = () => {
                   : 0,
               }}
             />
-            {/* Piece Title (Desktop) */}
-            {/* {device === "desktop" && (
-              <div
-                className="absolute max-h-full max-w-full z-3 flex flex-col items-end justify-start"
-                style={{
-                  width: carouselRef.current
-                    ? (carouselRef.current.clientWidth * 100) / 90
-                    : 0,
-                  height: carouselRef.current
-                    ? (carouselRef.current.clientHeight * 100) / 90
-                    : 0,
-                }}
-              >
-                {Array.from({ length: 3 }).map((_, index) => (
-                  <div className="overflow-y-hidden pb-12 -mb-12" key={index}>
-                    <RotatingText
-                      className="md:text-5xl tracking-widest font-optima"
-                      rotationInterval={CYCLE_DURATION * 1000}
-                      texts={works.map((work) => work.title)}
-                      initial={{ y: "70%", opacity: 0 }}
-                      exit={{ y: "-50%", opacity: 0.2 }}
-                      transition={{
-                        ease: "easeInOut",
-                        duration: TRANSITION_TIME / 2,
-                      }}
-                    />
-                  </div>
-                ))}
-              </div>
-            )} */}
           </div>
-          {/* Piece Title (Mobile) */}
-          {device === "mobile" && (
-            <div className="relative row-start-6 row-end-7 col-start-1 col-end-5 md:col-start-2 md:col-end-3 md:row-start-2 md:row-end-5 md:outline-1 flex flex-col items-start justify-start gap-[1.1em] overflow-visible">
-              {Array.from({ length: 3 }).map((_, index) => (
-                <div
-                  className="relative overflow-y-hidden pb-12 -mb-12 flex justify-center items-center text-xl md:text-5xl tracking-[0.15em] whitespace-nowrap"
-                  key={index}
-                >
-                  <RotatingText
-                    mainClassName="whitespace-nowrap z-3 font-optima font-bold"
-                    rotationInterval={CYCLE_DURATION * 1000}
-                    texts={works.map((work) => work.title)}
-                    initial={{ y: "70%", opacity: 0 }}
-                    exit={{ y: "-50%", opacity: 0.2 }}
-                    transition={{
-                      ease: "easeInOut",
-                      duration: TRANSITION_TIME / 2,
-                    }}
-                  />
-                </div>
-              ))}
-            </div>
-          )}
+          {/* Piece Title */}
+          <div className="relative row-start-6 row-end-7 col-start-1 col-end-5 md:col-start-2 md:col-end-4 md:row-start-2 md:row-end-5 flex flex-col items-start justify-start md:items-end gap-[1.1em] overflow-visible">
+            {Array.from({ length: 3 }).map((_, index) => (
+              <div
+                className="relative overflow-y-hidden pb-12 -mb-12 flex justify-center items-center text-xl md:text-5xl tracking-[0.15em] whitespace-nowrap"
+                key={index}
+              >
+                <RotatingText
+                  mainClassName="whitespace-nowrap z-3 font-optima font-bold"
+                  rotationInterval={CYCLE_DURATION * 1000}
+                  texts={works.map((work) => work.title)}
+                  initial={{ y: "70%", opacity: 0 }}
+                  exit={{ y: "-50%", opacity: 0.2 }}
+                  transition={{
+                    ease: "easeInOut",
+                    duration: TRANSITION_TIME / 2,
+                  }}
+                />
+              </div>
+            ))}
+          </div>
           {/* Gallery Button (Desktop) */}
           {device === "desktop" && (
-            <div className="row-start-9 row-end-10 col-start-1 col-end-5 md:col-span-full md:row-start-4 md:row-end-6 relative flex items-center md:pl-6 text-5xl md:text-[9rem] tracking-[2.5vw] overflow-visible">
+            <div className="row-start-9 row-end-10 col-start-1 col-end-5 md:col-span-full md:row-start-4 md:row-end-6 relative flex items-center md:pl-6 text-5xl md:text-[9rem] tracking-[2.7vw] overflow-visible">
               <span
                 className="font-bold-inter pl-6 cursor-pointer z-1"
                 ref={galleryTextRef}
@@ -217,7 +185,7 @@ const Home = () => {
                 GALLERY
               </span>
               <GalleryButton
-                className="absolute font-bold-inter md:text-[9rem] tracking-[2.5vw] flex items-center z-3"
+                className="absolute font-bold-inter md:text-[9rem] tracking-[2.7vw] flex items-center z-3"
                 text="GALLERY"
                 width={galleryTextRef.current?.clientWidth || 0}
                 height={galleryTextRef.current?.clientHeight || 0}

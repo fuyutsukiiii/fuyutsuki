@@ -214,7 +214,13 @@ const RotatingText = forwardRef<RotatingTextRef, RotatingTextProps>(
                       texts[currentTextIndex].length < 11 ? 1.1 : 0.18
                     }em`,
                   }
-                : {}
+                : {
+                    letterSpacing: `${
+                      texts[currentTextIndex].length < 7 ? 0.7 : 0.25
+                    }em`,
+                    marginRight:
+                      texts[currentTextIndex].length < 7 ? "-0.7rem" : "",
+                  }
             }
           >
             {elements.map((wordObj, wordIndex, array) => {
