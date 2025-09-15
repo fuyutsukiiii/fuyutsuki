@@ -72,7 +72,7 @@ const PieceContent = () => {
   return (
     <>
       <div
-        className="relative h-screen w-screen bg-primary-gray overflow-y-scroll no-scrollbar snap-y snap-mandatory overscroll-contain"
+        className="relative h-screen w-screen bg-primary-gray overflow-y-scroll no-scrollbar snap-y snap-mandatory md:overscroll-contain"
         ref={pageScrollRef}
       >
         <GrayGrid horizontal={true} />

@@ -21,7 +21,7 @@ const ExpandingDiv = ({
   onClick,
 }: Props) => {
   const divRef = useRef<HTMLDivElement>(null);
-  const [scale, setScale] = useState(1);
+  const [scale, setScale] = useState(0.2);
 
   useEffect(() => {
     const handleScrollOrResize = () => {
@@ -30,7 +30,7 @@ const ExpandingDiv = ({
         const rect = divRef.current.getBoundingClientRect();
         const divTop = rect.top;
         const divBottom = rect.bottom;
-        // If the div is completely out of view + a slight margin, skip calculations
+        // If the div is completely out of view + a margin, skip calculations
         if (divBottom < 0 - window.innerHeight * 0.1 || divTop > window.innerHeight * 1.1) {
           return;
         }

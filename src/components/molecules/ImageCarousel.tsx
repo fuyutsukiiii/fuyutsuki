@@ -43,7 +43,8 @@ const ImageCarousel = ({
   return (
     <div className={`${className} overflow-hidden`} ref={parentRef}>
       <motion.div
-        className="flex h-full w-max"
+        className="flex h-full"
+        style={{ width: `${worksList.length * 100}%` }}
         initial={{ x: 0 }}
         animate={{ x: translationArray }}
         transition={{
