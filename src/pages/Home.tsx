@@ -30,8 +30,6 @@ export async function loader() {
   );
   const { works } = result[0];
 
-  console.log(works);
-
   return { works };
 }
 
@@ -41,6 +39,7 @@ const Home = () => {
   const navigate = useNavigate();
 
   const { works } = useLoaderData() as { works: HomePiece[] };
+  console.log(works);
 
   const galleryTextRef = useRef<HTMLSpanElement>(null);
   const carouselRef = useRef<HTMLDivElement>(null);
