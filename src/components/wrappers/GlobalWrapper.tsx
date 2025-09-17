@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 import type { FullPieceWithSlug, ProcessedPiece } from "../../../Types";
 import { client } from "../../sanity/client";
 import { urlFor } from "../../sanity/utils";
+import InitialLoadWrapper from "./InitialLoadWrapper";
 
 export const DeviceContext = createContext<"desktop" | "mobile">("desktop");
 export const PiecesContext = createContext<ProcessedPiece[]>([]);
@@ -66,7 +67,9 @@ const GlobalWrapper = () => {
     <>
       <PiecesContext value={pieces}>
         <DeviceContext value={device}>
-          <Outlet />
+          <InitialLoadWrapper>
+            <Outlet />
+          </InitialLoadWrapper>
         </DeviceContext>
       </PiecesContext>
     </>

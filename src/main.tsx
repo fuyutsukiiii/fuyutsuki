@@ -13,8 +13,6 @@ import Piece from "./pages/Piece";
 import Contact from "./pages/Contact";
 import Layout from "./pages/Layout";
 import GlobalWrapper from "./components/wrappers/GlobalWrapper";
-// import Testing from "./pages/Testing";
-import OnPageLoadWrapper from "./components/wrappers/LoadingAnimation";
 
 const router = createBrowserRouter([
   {
@@ -53,11 +51,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/home",
-        element: (
-          <OnPageLoadWrapper>
-            <Home />
-          </OnPageLoadWrapper>
-        ),
+        element: <Home />,
         loader: homeLoader,
       },
       {
