@@ -150,7 +150,7 @@ const Home = () => {
           <div className="relative row-start-6 row-end-7 col-start-1 col-end-5 md:col-start-2 md:col-end-4 md:row-start-2 md:row-end-5 flex flex-col items-start justify-start md:items-end gap-[1.1em] overflow-visible">
             {Array.from({ length: 3 }).map((_, index) => (
               <div
-                className="relative overflow-y-hidden pb-12 -mb-12 flex justify-center items-center text-xl md:text-5xl tracking-[0.15em] whitespace-nowrap"
+                className="relative overflow-y-hidden pt-12 -mt-12 pb-2 flex justify-center items-center text-xl md:text-5xl tracking-[0.15em] whitespace-nowrap no-scrollbar overflow-hidden"
                 key={index}
               >
                 <RotatingText
