@@ -5,7 +5,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-const LoadingAnimation = ({ children }: Props) => {
+const OnPageLoadWrapper = ({ children }: Props) => {
   const location = useLocation();
 
   return (
@@ -26,4 +26,4 @@ const LoadingAnimation = ({ children }: Props) => {
   );
 };
 
-export default LoadingAnimation;
+export default OnPageLoadWrapper;

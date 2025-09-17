@@ -14,7 +14,7 @@ import Contact from "./pages/Contact";
 import Layout from "./pages/Layout";
 import GlobalWrapper from "./components/wrappers/GlobalWrapper";
 // import Testing from "./pages/Testing";
-import LoadingAnimation from "./components/wrappers/LoadingAnimation";
+import OnPageLoadWrapper from "./components/wrappers/LoadingAnimation";
 
 const router = createBrowserRouter([
   {
@@ -51,21 +51,12 @@ const router = createBrowserRouter([
           },
         ],
       },
-      // {
-      //   path: "testing",
-      //   element: <Testing />,
-      // },
-      // {
-      //   path: "/old-home",
-      //   element: <OldHome />,
-      //   loader: homeLoader,
-      // },
       {
         path: "/home",
         element: (
-          <LoadingAnimation>
+          <OnPageLoadWrapper>
             <Home />
-          </LoadingAnimation>
+          </OnPageLoadWrapper>
         ),
         loader: homeLoader,
       },
