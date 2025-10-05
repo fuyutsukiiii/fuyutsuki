@@ -38,6 +38,7 @@ export interface ProcessedPiece {
   date: string;
   description: PortableTextBlock;
   urls: string[];
+  highResUrls: string[];
   slug: {
     current: string;
   };

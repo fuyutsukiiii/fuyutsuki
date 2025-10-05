@@ -39,7 +39,6 @@ const Home = () => {
   const navigate = useNavigate();
 
   const { works } = useLoaderData() as { works: HomePiece[] };
-  console.log(works);
 
   const galleryTextRef = useRef<HTMLSpanElement>(null);
   const carouselRef = useRef<HTMLDivElement>(null);

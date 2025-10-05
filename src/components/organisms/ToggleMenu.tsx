@@ -13,7 +13,6 @@ const ToggleMenu = () => {
     if (menuButtonRef.current) {
       if (targetWidth === menuButtonRef.current.offsetWidth) {
         setTargetWidth("100%");
-        console.log("hit");
       } else {
         setTargetWidth(menuButtonRef.current.offsetWidth);
       }

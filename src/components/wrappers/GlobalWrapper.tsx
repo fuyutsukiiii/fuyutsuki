@@ -44,8 +44,15 @@ const GlobalWrapper = () => {
             .auto("format")
             .quality(100)
             .fit("clip")
-            .maxWidth(window.innerWidth)
-            .maxHeight(window.innerHeight)
+            .width(window.innerWidth)
+            .url();
+        }),
+        highResUrls: piece.images.map((image) => {
+          return urlFor(image)
+            .auto("format")
+            .quality(100)
+            .fit("clip")
+            .width(window.innerWidth * 2)
             .url();
         }),
       }));

@@ -11,10 +11,11 @@ import { DeviceContext } from "../wrappers/GlobalWrapper";
 
 interface Props {
   urls: string[];
+  highResUrls: string[];
   scrollRef: RefObject<HTMLElement | null>;
 }
 
-const ImageStack = ({ urls, scrollRef }: Props) => {
+const ImageStack = ({ urls, highResUrls, scrollRef }: Props) => {
   const device = useContext(DeviceContext);
 
   const [initialScroll, setInitialScroll] = useState(0);
@@ -104,9 +105,8 @@ const ImageStack = ({ urls, scrollRef }: Props) => {
         const randomTilt = useMemo(() => Math.random() * 20 - 10, []);
 
         return (
-          <>
+          <div key={url.toString() + index}>
             <motion.div
-              key={url}
               className="h-[100vmin] w-[85vw] md:w-[90vw] flex-shrink-0 flex justify-center items-center"
               initial={{ y: `-${100 * index}%` }}
               animate={inView ? { y: 0 } : { y: `-${100 * index}%` }}
@@ -128,12 +128,12 @@ const ImageStack = ({ urls, scrollRef }: Props) => {
                 transition={{ duration: 0.6 }}
                 src={url}
                 style={{ cursor: canZoom ? "zoom-in" : "default" }}
-                onClick={() => handleZoom(url)}
+                onClick={() => handleZoom(highResUrls[index])}
               />
             </motion.div>
-            {zoomedUrl == url && (
+            {zoomedUrl == highResUrls[index] && (
               <div
-                key={url + "-zoomed"}
+                key={highResUrls[index] + "-zoomed"}
                 className="fixed inset-0 bg-black/90 overflow-auto z-9999"
                 style={{ cursor: "zoom-out" }}
                 onClick={() => setZoomedUrl(null)}
@@ -147,7 +147,7 @@ const ImageStack = ({ urls, scrollRef }: Props) => {
                 />
               </div>
             )}
-          </>
+          </div>
         );
       })}
     </motion.div>

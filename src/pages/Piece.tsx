@@ -42,6 +42,7 @@ const PieceContent = () => {
   const date = currentPiece.date;
   const description = currentPiece.description;
   const pieceUrls = currentPiece.urls;
+  const highResUrls = currentPiece.highResUrls;
   const nextPieceUrl = nextPiece.slug.current;
 
   const navigateToNext = () => {
@@ -86,7 +87,7 @@ const PieceContent = () => {
               <PortableText value={description} />
             </div>
           </div>
-          <ImageStack urls={pieceUrls} scrollRef={pageScrollRef} />
+          <ImageStack urls={pieceUrls} highResUrls={highResUrls} scrollRef={pageScrollRef} />
           <NextImagePreview progress={percentToNextPiece * 100} />
         </div>
         <div className="h-[12.5vh] w-screen" ref={scrollBufferRef} />

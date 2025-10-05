@@ -13,13 +13,6 @@ const PieceInfo = ({ title, date }: Props) => {
 
   useEffect(() => {
     if (!ref.current) return;
-
-    const rect = ref.current.getBoundingClientRect();
-    setParentWidth(rect.width);
-  }, [ref.current]);
-
-  useEffect(() => {
-    if (!ref.current) return;
     const updateWidth = () =>
       setParentWidth(ref.current!.getBoundingClientRect().width);
 
@@ -29,7 +22,7 @@ const PieceInfo = ({ title, date }: Props) => {
     resizeObserver.observe(ref.current);
 
     return () => resizeObserver.disconnect();
-  }, []);
+  }, [ref.current]);
 
   return (
     <div
