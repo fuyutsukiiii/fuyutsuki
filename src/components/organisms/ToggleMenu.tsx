@@ -32,17 +32,17 @@ const ToggleMenu = () => {
   return (
     <div className="relative w-full">
       <motion.div
-        className="w-full h-max flex justify-between origin-left overflow-hidden"
-        initial={{ width: "max-content" }}
+        className="w-full h-max py-3 flex justify-between origin-left overflow-hidden"
+        initial={{ width: targetWidth }}
         animate={{ width: targetWidth }}
         transition={{
-          duration: 0.2,
+          duration: 0.25,
+          ease: "easeOut",
         }}
+        whileHover={{ width: "100%" }}
       >
         <span
           ref={menuButtonRef}
-          onClick={handleClick}
-          className="cursor-pointer"
         >
           MENU
         </span>
