@@ -10,6 +10,7 @@ import RotatingText from "../components/atoms/RotatingText";
 import { DeviceContext } from "../components/wrappers/GlobalWrapper";
 import BouncingArrow from "../components/atoms/BouncingArrow";
 import ToggleMenu from "../components/organisms/ToggleMenu";
+import { useTimer } from "../hooks/useTimer";
 
 const isMobile = window.innerWidth < 768;
 
@@ -22,7 +23,7 @@ const FEATURED_QUERY = `*[_type == "home${isMobile ? "-mobile" : ""}"]{
 }`;
 
 const CYCLE_DURATION = 8;
-const TRANSITION_TIME = 0.4;
+const TRANSITION_TIME = 0.8;
 
 export async function loader() {
   const result = await client.fetch<{ works: SanityDocument[] }[]>(
@@ -44,8 +45,12 @@ const Home = () => {
   const carouselRef = useRef<HTMLDivElement>(null);
   const scrollBufferRef = useRef<HTMLDivElement>(null);
 
+  const [time] = useTimer();
 
-  // Need this to force rerender for corrent z-indexing 
+  const index = Math.floor(time / CYCLE_DURATION) % works.length;
+  const currentPiece = works[index];
+
+  // Need this to force rerender for corrent z-indexing
   const [dummyLegacyState, setDummyLegacyState] = useState(0);
 
   useEffect(() => {
@@ -107,7 +112,7 @@ const Home = () => {
               <ImageCarousel
                 className="h-full w-full z-2 outline-6 md:outline-0 outline-white"
                 cycleDuration={CYCLE_DURATION}
-                works={works}
+                currentPiece={currentPiece}
                 transitionTime={TRANSITION_TIME}
               />
             </div>
@@ -117,22 +122,27 @@ const Home = () => {
           {/* Piece Title */}
           <div className="relative row-start-6 row-end-7 col-start-1 col-end-5 md:col-start-2 md:col-end-4 md:row-start-2 md:row-end-5 flex flex-col items-start justify-start md:items-end gap-[1.1em] overflow-visible">
             {Array.from({ length: 3 }).map((_, index) => (
-              <div
-                className="relative overflow-y-hidden pt-12 -mt-12 pb-2 flex justify-center items-center text-xl md:text-5xl tracking-[0.15em] whitespace-nowrap no-scrollbar overflow-hidden"
+              <span
+                className="relative overflow-y-hidden pt-12 -mt-12 pb-2 flex justify-center items-center text-xl md:text-5xl tracking-[0.15em] whitespace-nowrap no-scrollbar overflow-hidden z-3 font-optima font-bold"
                 key={index}
+                style={
+                  device === "mobile"
+                    ? {
+                        letterSpacing: `${
+                          currentPiece.title.length < 11 ? 1.1 : 0.18
+                        }em`,
+                      }
+                    : {
+                        letterSpacing: `${
+                          currentPiece.title.length < 7 ? 0.7 : 0.25
+                        }em`,
+                        marginRight:
+                          currentPiece.title.length < 7 ? "-0.7rem" : "",
+                      }
+                }
               >
-                <RotatingText
-                  mainClassName="whitespace-nowrap z-3 font-optima font-bold"
-                  rotationInterval={CYCLE_DURATION * 1000}
-                  texts={works.map((work) => work.title)}
-                  initial={{ y: "70%", opacity: 0 }}
-                  exit={{ y: "-50%", opacity: 0.2 }}
-                  transition={{
-                    ease: "easeInOut",
-                    duration: TRANSITION_TIME / 2,
-                  }}
-                />
-              </div>
+                {currentPiece.title}
+              </span>
             ))}
           </div>
           {/* Gallery Button (Desktop) */}
