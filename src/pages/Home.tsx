@@ -44,8 +44,15 @@ const Home = () => {
   const carouselRef = useRef<HTMLDivElement>(null);
   const scrollBufferRef = useRef<HTMLDivElement>(null);
 
-  const [imageCarouselWidth, setImageCarouselWidth] = useState(0);
-  const [imageCarouselHeight, setImageCarouselHeight] = useState(0);
+
+  // Need this to force rerender for corrent z-indexing 
+  const [dummyLegacyState, setDummyLegacyState] = useState(0);
+
+  useEffect(() => {
+    if (carouselRef.current) {
+      setDummyLegacyState(1);
+    }
+  }, [carouselRef.current]);
 
   const [navigatePercentScroll, setNavigatePercentScroll] = useState(0);
 
