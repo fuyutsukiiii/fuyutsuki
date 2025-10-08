@@ -52,7 +52,7 @@ const GlobalWrapper = () => {
             .auto("format")
             .quality(100)
             .fit("clip")
-            .width(window.innerWidth * 2)
+            .width(window.innerWidth * 3)
             .url();
         }),
       }));

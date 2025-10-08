@@ -8,6 +8,7 @@ import {
   type RefObject,
 } from "react";
 import { DeviceContext } from "../wrappers/GlobalWrapper";
+import LoadingImagePlaceholder from "../molecules/LoadingImagePlaceholder";
 
 interface Props {
   urls: string[];
@@ -23,6 +24,7 @@ const ImageStack = ({ urls, highResUrls, scrollRef }: Props) => {
   const [canZoom, setCanZoom] = useState(false);
   const [inView, setInView] = useState(false);
   const [zoomedUrl, setZoomedUrl] = useState<string | null>(null);
+  const [loadedImages, setLoadedImages] = useState(new Set<number>());
 
   const ref = useRef<HTMLDivElement>(null);
 
@@ -108,27 +110,32 @@ const ImageStack = ({ urls, highResUrls, scrollRef }: Props) => {
           <div key={url.toString() + index}>
             <motion.div
               className="h-[100vmin] w-[85vw] md:w-[90vw] flex-shrink-0 flex justify-center items-center"
-              initial={{ y: `-${100 * index}%` }}
-              animate={inView ? { y: 0 } : { y: `-${100 * index}%` }}
+              initial={{
+                y: `-${100 * index}%`,
+                scale: urls.length === 1 ? 1 : 0.6,
+                rotate: urls.length === 1 ? "0deg" : `${randomTilt}deg`,
+              }}
+              animate={
+                inView
+                  ? { y: 0, scale: 1, rotate: "0deg" }
+                  : {
+                      y: `-${100 * index}%`,
+                      scale: 0.6,
+                      rotate: `${randomTilt}deg`,
+                    }
+              }
               transition={{ duration: 0.6 }}
               ref={index === 0 ? ref : undefined}
             >
-              <motion.img
-                className="max-h-full max-w-full object-contain"
-                initial={
-                  urls.length === 1
-                    ? { scale: 1, rotate: "0deg" }
-                    : { scale: 0.6, rotate: `${randomTilt}deg` }
-                }
-                animate={
-                  inView
-                    ? { scale: 1, rotate: "0deg" }
-                    : { scale: 0.6, rotate: `${randomTilt}deg` }
-                }
-                transition={{ duration: 0.6 }}
+              {!loadedImages.has(index) && <LoadingImagePlaceholder />}
+              <img
+                className="max-h-full max-w-full object-contain z-1"
                 src={url}
                 style={{ cursor: canZoom ? "zoom-in" : "default" }}
                 onClick={() => handleZoom(highResUrls[index])}
+                onLoad={() =>
+                  setLoadedImages((prev) => new Set(prev).add(index))
+                }
               />
             </motion.div>
             {zoomedUrl == highResUrls[index] && (
