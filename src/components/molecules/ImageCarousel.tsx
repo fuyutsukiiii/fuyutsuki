@@ -9,8 +9,6 @@ interface Props {
   className?: string;
   cycleDuration?: number;
   transitionTime?: number;
-  width: number;
-  height: number;
 }
 
 const ImageCarousel = ({

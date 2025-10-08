@@ -44,9 +44,8 @@ const Home = () => {
   const carouselRef = useRef<HTMLDivElement>(null);
   const scrollBufferRef = useRef<HTMLDivElement>(null);
 
-  // Legacy state that needs to be here for some reason (to load the image carousel)
-  const [_galleryTextWidth, setGalleryTextWidth] = useState(0);
-  const [_galleryTextHeight, setGalleryTextHeight] = useState(0);
+  const [imageCarouselWidth, setImageCarouselWidth] = useState(0);
+  const [imageCarouselHeight, setImageCarouselHeight] = useState(0);
 
   const [navigatePercentScroll, setNavigatePercentScroll] = useState(0);
 
@@ -71,30 +70,6 @@ const Home = () => {
     };
   }, [scrollBufferRef.current]);
 
-  useEffect(() => {
-    function measure() {
-      if (galleryTextRef.current) {
-        setGalleryTextWidth(galleryTextRef.current.clientWidth);
-        setGalleryTextHeight(galleryTextRef.current.clientHeight);
-      }
-    }
-    measure();
-
-    window.addEventListener("resize", measure);
-
-    // Listen for font loading
-    if (document.fonts) {
-      document.fonts.addEventListener("loadingdone", measure);
-    }
-
-    return () => {
-      window.removeEventListener("resize", measure);
-      if (document.fonts) {
-        document.fonts.removeEventListener("loadingdone", measure);
-      }
-    };
-  }, [galleryTextRef.current]);
-
   return (
     <div className="relative h-screen w-screen bg-primary-gray overflow-y-scroll no-scrollbar snap-y snap-proximity md:overscroll-contain">
       <div className="relative flex-shrink-0 h-screen w-screen flex flex-col bg-primary-gray text-primary-blue overscroll-contain snap-end">
@@ -118,7 +93,6 @@ const Home = () => {
           </div>
           {/* Image Carousel */}
           <div className="relative col-start-2 col-end-5 row-start-3 row-end-8 md:col-start-2 md:col-end-3 md:row-start-2 md:row-end-5 flex items-end md:items-center justify-center md:mr-12">
-            <div className="absolute h-full w-full" />
             <div
               className="h-full w-full mx-8 md:m-0 md:h-max md:max-h-[95%] md:w-[95%] aspect-[1/1.4] z-2"
               ref={carouselRef}
@@ -128,22 +102,10 @@ const Home = () => {
                 cycleDuration={CYCLE_DURATION}
                 works={works}
                 transitionTime={TRANSITION_TIME}
-                width={carouselRef.current?.clientWidth || 0}
-                height={carouselRef.current?.clientHeight || 0}
               />
             </div>
             {/* White border on a different layer for GALLERY text effect */}
-            <div
-              className="absolute max-h-full max-w-full bg-white z-1"
-              style={{
-                width: carouselRef.current
-                  ? (carouselRef.current.clientWidth * 100) / 90
-                  : 0,
-                height: carouselRef.current
-                  ? (carouselRef.current.clientHeight * 100) / 90
-                  : 0,
-              }}
-            />
+            <div className="absolute -inset-[2px] bg-white z-1" />
           </div>
           {/* Piece Title */}
           <div className="relative row-start-6 row-end-7 col-start-1 col-end-5 md:col-start-2 md:col-end-4 md:row-start-2 md:row-end-5 flex flex-col items-start justify-start md:items-end gap-[1.1em] overflow-visible">
