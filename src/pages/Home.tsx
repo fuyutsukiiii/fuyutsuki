@@ -6,7 +6,7 @@ import { useLoaderData, useNavigate } from "react-router-dom";
 import GalleryButton from "../components/molecules/GalleryButton";
 import ImageCarousel from "../components/molecules/ImageCarousel";
 import type { HomePiece } from "../../Types";
-import RotatingText from "../components/atoms/RotatingText";
+import { motion } from "framer-motion";
 import { DeviceContext } from "../components/wrappers/GlobalWrapper";
 import BouncingArrow from "../components/atoms/BouncingArrow";
 import ToggleMenu from "../components/organisms/ToggleMenu";
@@ -122,8 +122,8 @@ const Home = () => {
           {/* Piece Title */}
           <div className="relative row-start-6 row-end-7 col-start-1 col-end-5 md:col-start-2 md:col-end-4 md:row-start-2 md:row-end-5 flex flex-col items-start justify-start md:items-end gap-[1.1em] overflow-visible">
             {Array.from({ length: 3 }).map((_, index) => (
-              <span
-                className="relative overflow-y-hidden pt-12 -mt-12 pb-2 flex justify-center items-center text-xl md:text-5xl tracking-[0.15em] whitespace-nowrap no-scrollbar overflow-hidden z-3 font-optima font-bold"
+              <div
+                className="relative overflow-y-hidden pt-6 -mt-6 pb-2 flex justify-center items-center text-xl md:text-5xl tracking-[0.15em] whitespace-nowrap no-scrollbar overflow-hidden z-3 font-optima font-bold"
                 key={index}
                 style={
                   device === "mobile"
@@ -141,8 +141,23 @@ const Home = () => {
                       }
                 }
               >
-                {currentPiece.title}
-              </span>
+                <motion.span
+                  animate={{ y: ["100%", "0%", "0%", "-400%"] }}
+                  transition={{
+                    duration: CYCLE_DURATION,
+                    times: [
+                      0,
+                      (TRANSITION_TIME * 0.35) / CYCLE_DURATION,
+                      1 - (TRANSITION_TIME * 0.65) / CYCLE_DURATION,
+                      1,
+                    ],
+                    ease: "easeInOut",
+                    repeat: Infinity,
+                  }}
+                >
+                  {currentPiece.title}
+                </motion.span>
+              </div>
             ))}
           </div>
           {/* Gallery Button (Desktop) */}
