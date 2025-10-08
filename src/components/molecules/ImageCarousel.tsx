@@ -1,7 +1,8 @@
-import { motion } from "framer-motion";
-import { useRef } from "react";
+import { AnimatePresence, useAnimate } from "framer-motion";
+import { useEffect } from "react";
 import type { HomePiece } from "../../../Types";
 import { urlFor } from "../../sanity/utils";
+import useTimer from "../../hooks/useTimer";
 
 interface Props {
   works: HomePiece[];
@@ -17,60 +18,53 @@ const ImageCarousel = ({
   className,
   cycleDuration = 4,
   transitionTime = 0.2,
-  width,
-  height,
 }: Props) => {
-  const parentRef = useRef<HTMLDivElement>(null);
-  const worksList = [...works, ...works];
-  const totalDuration = cycleDuration * works.length;
+  const [time] = useTimer();
 
-  const translationArray = Array.from({
-    length: worksList.length + 1,
-  }).map((_, index) => `-${(100 / worksList.length) * Math.floor(index / 2)}%`);
+  const index = Math.floor(time / cycleDuration) % works.length;
+  const currentWork = works[index];
 
-  const breakpoints = Array.from({ length: translationArray.length }).map(
-    (_, index) => {
-      return index % 2 === 0
-        ? (1 / works.length) * (index / 2)
-        : (1 / works.length) * ((index + 1) / 2) -
-            (transitionTime * 1000) / (totalDuration * 1000);
-      // This ternary operator statement normalizes timing to the specified transition time
-      // console.log(translationArray, breakpoints);
-      // ^Use this console log to see how it works
-    }
-  );
+  const [sliderDiv, animateSliderDiv] = useAnimate();
+
+  useEffect(() => {
+    animateSliderDiv(
+      sliderDiv.current,
+      {
+        x: ["0%", "100%", "100%", "-100%", "-100%", "0%"],
+        y: ["0%", "0%", "500%", "500%", "0%", "0%"], // Making the y super high to hide the div crossing back
+      },
+      {
+        duration: cycleDuration,
+        ease: "easeInOut",
+        times: [
+          0,
+          0 + (transitionTime * 0.8) / cycleDuration,
+          0.4,
+          0.7,
+          1 - (transitionTime * 1.3) / cycleDuration,
+          1,
+        ],
+      }
+    );
+  }, [currentWork]);
 
   return (
-    <div className={`${className} overflow-hidden`} ref={parentRef}>
-      <motion.div
-        className="flex h-full"
-        style={{ width: `${worksList.length * 100}%` }}
-        initial={{ x: 0 }}
-        animate={{ x: translationArray }}
-        transition={{
-          duration: totalDuration,
-          times: breakpoints,
-          ease: "easeIn",
-          repeat: Infinity,
-          delay: transitionTime, // Add a delay here so the carousel doesn't get ahead of the rotating text
-        }}
-      >
-        {worksList.map((work, index) => (
-          <img
-            className="object-cover"
-            style={{ width: width, height: height }}
-            src={urlFor(work.images[0])
-              .auto("format")
-              .quality(100)
-              .height(height * 3)
-              .width(width * 3)
-              .url()}
-            alt={work.title}
-            key={index}
-          />
-        ))}
-      </motion.div>
-    </div>
+    <AnimatePresence>
+      <div className={`relative ${className} overflow-hidden`}>
+        <img
+          className="object-cover w-full h-full"
+          src={urlFor(currentWork.images[0])
+            .auto("format")
+            .quality(100)
+            .url()}
+          alt={currentWork.title}
+        />
+        <div
+          className="absolute inset-0 h-full w-full bg-primary-blue"
+          ref={sliderDiv}
+        />
+      </div>
+    </AnimatePresence>
   );
 };
 

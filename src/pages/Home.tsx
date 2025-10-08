@@ -21,7 +21,7 @@ const FEATURED_QUERY = `*[_type == "home${isMobile ? "-mobile" : ""}"]{
   }
 }`;
 
-const CYCLE_DURATION = 5;
+const CYCLE_DURATION = 8;
 const TRANSITION_TIME = 0.4;
 
 export async function loader() {

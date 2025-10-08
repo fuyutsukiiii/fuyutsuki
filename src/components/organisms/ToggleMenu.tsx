@@ -42,6 +42,7 @@ const ToggleMenu = () => {
         whileHover={{ width: "100%" }}
       >
         <span
+          className="cursor-default"
           ref={menuButtonRef}
         >
           MENU
