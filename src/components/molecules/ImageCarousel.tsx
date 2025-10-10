@@ -27,8 +27,7 @@ const ImageCarousel = ({
         <motion.div
           className="absolute inset-0 h-full w-full bg-primary-blue"
           animate={{
-            x: ["0%", "100%", "100%", "-100%", "-100%", "0%"],
-            y: ["0%", "0%", "500%", "500%", "0%", "0%"], // Making the y super high to hide the div crossing back
+            x: ["0%", "100%", "100%", "0%"],
           }}
           transition={{
             duration: cycleDuration,
@@ -36,8 +35,6 @@ const ImageCarousel = ({
             times: [
               0,
               0 + (transitionTime * 0.35) / cycleDuration,
-              0.4,
-              0.7,
               1 - (transitionTime * 0.65) / cycleDuration,
               1,
             ],
