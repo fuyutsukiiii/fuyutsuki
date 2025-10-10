@@ -33,7 +33,7 @@ const ToggleMenu = () => {
     <div className="relative w-full">
       <motion.div
         className="w-full h-max py-3 flex justify-between origin-left overflow-hidden"
-        initial={{ width: targetWidth }}
+        initial={{ width: 0 }}
         animate={{ width: targetWidth }}
         transition={{
           duration: 0.25,

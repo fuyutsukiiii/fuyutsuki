@@ -83,7 +83,10 @@ const Home = () => {
   }, [scrollBufferRef.current]);
 
   return (
-    <div className="relative h-screen w-screen bg-primary-gray overflow-y-scroll no-scrollbar snap-y snap-proximity md:overscroll-contain">
+    <div
+      className="relative bg-primary-gray overflow-y-scroll no-scrollbar snap-y snap-proximity md:overscroll-contain"
+      style={{ height: "100dvh", width: "100dvw" }}
+    >
       <div className="relative flex-shrink-0 h-screen w-screen flex flex-col bg-primary-gray text-primary-blue overscroll-contain snap-end">
         <Grid />
         <div className="absolute left-4 top-4 bottom-8 right-4 md:inset-4 grid grid-rows-[3fr_7fr_3fr_3fr_7fr_7fr_2fr_2fr_4fr] grid-cols-[3fr_2fr_1fr_9fr] md:grid-rows-[3fr_1fr_8fr_3fr_2fr] md:grid-cols-[4fr_6fr] z-1 overflow-visible">
@@ -117,7 +120,17 @@ const Home = () => {
               />
             </div>
             {/* White border on a different layer for GALLERY text effect */}
-            <div className="absolute -inset-[2px] bg-white z-1" />
+            <div
+              className="hidden md:block absolute max-h-full max-w-full bg-white z-1"
+              style={{
+                width: carouselRef.current
+                  ? (carouselRef.current.clientWidth * 100) / 90
+                  : 0,
+                height: carouselRef.current
+                  ? (carouselRef.current.clientHeight * 100) / 90
+                  : 0,
+              }}
+            />
           </div>
           {/* Piece Title */}
           <div className="relative row-start-6 row-end-7 col-start-1 col-end-5 md:col-start-2 md:col-end-4 md:row-start-2 md:row-end-5 flex flex-col items-start justify-start md:items-end gap-[1.1em] overflow-visible">
