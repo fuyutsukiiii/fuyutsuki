@@ -9,16 +9,6 @@ const ToggleMenu = () => {
   );
   const navigate = useNavigate();
 
-  const handleClick = () => {
-    if (menuButtonRef.current) {
-      if (targetWidth === menuButtonRef.current.offsetWidth) {
-        setTargetWidth("100%");
-      } else {
-        setTargetWidth(menuButtonRef.current.offsetWidth);
-      }
-    }
-  };
-
   const navToPage = (page: string) => {
     navigate(page);
   };

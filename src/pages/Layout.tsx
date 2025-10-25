@@ -6,14 +6,14 @@ interface Props {
   children?: React.ReactNode;
 }
 
-const Layout = ({children}: Props) => {
+const Layout = ({ children }: Props) => {
   return (
     <>
       <CrossfadeWrapper>
         <Outlet />
         {children}
       </CrossfadeWrapper>
-      <Menu />
+      {/* <Menu /> */}
     </>
   );
 };

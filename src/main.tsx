@@ -4,7 +4,7 @@ import {
   RouterProvider,
   Navigate,
 } from "react-router-dom";
-import { loader as newGalleryLoader } from "./pages/Gallery";
+import { loader as galleryLoader } from "./pages/Gallery";
 import Home, { loader as homeLoader } from "./pages/Home";
 import { createRoot } from "react-dom/client";
 import { StrictMode } from "react";
@@ -13,6 +13,7 @@ import Piece from "./pages/Piece";
 import Contact from "./pages/Contact";
 import Layout from "./pages/Layout";
 import GlobalWrapper from "./components/wrappers/GlobalWrapper";
+import NewGallery from "./pages/NewGallery";
 
 const router = createBrowserRouter([
   {
@@ -28,7 +29,12 @@ const router = createBrowserRouter([
           {
             path: "gallery",
             element: <Gallery />,
-            loader: newGalleryLoader,
+            loader: galleryLoader,
+          },
+          {
+            path: "new-gallery",
+            element: <NewGallery />,
+            loader: galleryLoader,
           },
           {
             path: "contact",
