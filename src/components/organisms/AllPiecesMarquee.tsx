@@ -8,6 +8,7 @@ import {
 import type { PreviewArtPiece } from "../../../Types";
 import { urlFor } from "../../sanity/utils";
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   pieces: PreviewArtPiece[];
@@ -24,6 +25,8 @@ interface Props {
  * @param speed - Seconds per piece.
  */
 const AllPiecesMarquee = ({ pieces, currentPieceReader }: Props) => {
+  const navigate = useNavigate();
+
   const scrollRef = useRef<HTMLDivElement>(null);
   const [finishingAnimation, setFinishingAnimation] = useState(false);
   const [rerender, setRerender] = useState(false);
@@ -78,11 +81,12 @@ const AllPiecesMarquee = ({ pieces, currentPieceReader }: Props) => {
         {[...pieces, ...pieces].map((piece, index) => (
           <img
             key={piece._id + index}
-            className="max-h-[30%] max-w-[80%] object-contain"
+            className="max-h-[30%] max-w-[80%] object-contain cursor-pointer"
             src={urlFor(piece.images[0]).auto("format").quality(70).url()}
             alt={piece.title}
             onMouseEnter={() => currentPieceReader?.(piece, true)}
             onMouseLeave={() => currentPieceReader?.(piece, false)}
+            onClick={() => navigate(`/illustration/${piece.slug.current}`)}
           />
         ))}
       </motion.div>

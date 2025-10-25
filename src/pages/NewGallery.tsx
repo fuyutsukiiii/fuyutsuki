@@ -1,13 +1,21 @@
 import type { SanityDocument } from "@sanity/client";
 import { client } from "../sanity/client";
 import type { PreviewArtPiece } from "../../Types";
-import { useContext, useEffect, useRef, useState, type RefObject } from "react";
+import {
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type RefObject,
+} from "react";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import { DeviceContext } from "../components/wrappers/GlobalWrapper";
 import PieceInfoNew from "../components/organisms/PieceInfoNew";
 import ExpandingDiv from "../components/atoms/ExpandingDiv";
 import GalleryImage from "../components/atoms/GalleryImage";
 import AllPiecesMarquee from "../components/organisms/AllPiecesMarquee";
+import GrayGrid from "../components/organisms/GrayGrid";
 
 const GALLERY_QUERY = `*[_type == "gallery"]{
   works[]->{
@@ -34,7 +42,12 @@ const NewGallery = () => {
 
   const galleryWorks = useLoaderData() as PreviewArtPiece[];
 
-  const [currentWork, setcurrentWork] = useState(galleryWorks[0]);
+  const [currentWork, setCurrentWork] = useState(galleryWorks[0]);
+  const [focus, setFocus] = useState<"highlights" | "all">("highlights");
+  const shuffledWorks = useMemo(
+    () => shuffleWorks(galleryWorks),
+    [galleryWorks]
+  );
 
   const worksScrollRef = useRef<HTMLDivElement>(null);
 
@@ -58,14 +71,20 @@ const NewGallery = () => {
   const handleRescale = (work: PreviewArtPiece, scale: number) => {
     // If scale > 0.3, this piece is bigger than all the others.
     if (scale > 0.3) {
-      setcurrentWork(work);
+      setCurrentWork(work);
     }
   };
 
   const handleMarqueeFocus = (piece: PreviewArtPiece, focused: boolean) => {
     if (focused) {
-      setcurrentWork(piece);
+      setCurrentWork(piece);
+      setFocus("all");
     }
+  };
+
+  const handleHighlightsFocus = (work: PreviewArtPiece) => {
+    setFocus("highlights");
+    setCurrentWork(work);
   };
 
   return (
@@ -75,14 +94,15 @@ const NewGallery = () => {
     >
       {/* Fixed layout elements */}
       <div className="fixed inset-0 h-screen w-screen grid md:grid-cols-[3fr_5fr_3fr]">
+        <GrayGrid />
         <PieceInfoNew
           title={currentWork.title}
           date={currentWork.date}
-          focus="highlights"
+          focus={focus}
         />
         <div className="md:col-start-3 md:col-end-4 h-[50%] flex justify-center items-center">
           <AllPiecesMarquee
-            pieces={galleryWorks.slice(0, 3)}
+            pieces={shuffledWorks}
             currentPieceReader={handleMarqueeFocus}
             speed={2}
           />
@@ -94,11 +114,8 @@ const NewGallery = () => {
           <div
             className="w-full grid md:grid-cols-[3fr_5fr_3fr] grid-rows-none z-1"
             key={work._id}
+            onMouseEnter={() => handleHighlightsFocus(work)}
           >
-            {/* <div className="relative col-start-1 col-end-2 -translate-y-1/2">
-              <div className="absolute top-100 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[3vmin] aspect-[1/1] bg-white rounded-full" />
-              <div className="absolute left-1/2 -translate-x-1/2 -translate-y-1/4 bg-white h-[300%] w-[0.5vmin]" />
-            </div> */}
             <ExpandingDiv
               className="h-[60vh] md:h-[80vh] md:col-start-2 md:col-end-3 flex-shrink-0 pr-4 md:pr-0 flex justify-start items-center origin-left snap-center"
               style={{
@@ -116,6 +133,15 @@ const NewGallery = () => {
       </div>
     </div>
   );
+};
+
+const shuffleWorks = (works: PreviewArtPiece[]) => {
+  const worksCopy = [...works];
+  for (let i = worksCopy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [worksCopy[i], worksCopy[j]] = [worksCopy[j], worksCopy[i]];
+  }
+  return worksCopy;
 };
 
 export default NewGallery;
