@@ -39,6 +39,7 @@ export interface ProcessedPiece {
   description: PortableTextBlock;
   urls: string[];
   highResUrls: string[];
+  loadingUrls: string[];
   slug: {
     current: string;
   };

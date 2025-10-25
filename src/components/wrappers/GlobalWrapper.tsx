@@ -55,6 +55,15 @@ const GlobalWrapper = () => {
             .width(window.innerWidth * 3)
             .url();
         }),
+        loadingUrls: piece.images.map((image) => {
+          return urlFor(image)
+            .auto("format")
+            .fit("clip")
+            .width(50)
+            .quality(1)
+            .blur(99)
+            .url();
+        }),
       }));
 
       setPieces(allProcessedPieces);

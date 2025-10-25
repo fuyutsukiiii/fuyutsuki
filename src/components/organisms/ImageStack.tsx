@@ -13,10 +13,11 @@ import LoadingImagePlaceholder from "../molecules/LoadingImagePlaceholder";
 interface Props {
   urls: string[];
   highResUrls: string[];
+  loadingUrls: string[];
   scrollRef: RefObject<HTMLElement | null>;
 }
 
-const ImageStack = ({ urls, highResUrls, scrollRef }: Props) => {
+const ImageStack = ({ urls, highResUrls, loadingUrls, scrollRef }: Props) => {
   const device = useContext(DeviceContext);
 
   const [initialScroll, setInitialScroll] = useState(0);
@@ -127,7 +128,9 @@ const ImageStack = ({ urls, highResUrls, scrollRef }: Props) => {
               transition={{ duration: 0.6 }}
               ref={index === 0 ? ref : undefined}
             >
-              {!loadedImages.has(index) && <LoadingImagePlaceholder />}
+              {!loadedImages.has(index) && (
+                <img className="h-full w-full object-contain" src={loadingUrls[index]} />
+              )}
               <img
                 className="max-h-full max-w-full object-contain z-1"
                 src={url}
