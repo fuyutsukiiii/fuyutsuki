@@ -1,14 +1,14 @@
 import { useContext, useEffect, useRef, useState, type RefObject } from "react";
 import { client } from "../sanity/client";
 import type { SanityDocument } from "@sanity/client";
+import { AnimatePresence, motion } from "framer-motion";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import type { PreviewArtPiece } from "../../Types";
 import ExpandingDiv from "../components/atoms/ExpandingDiv";
 import GalleryImage from "../components/atoms/GalleryImage";
-import PieceInfo from "../components/molecules/PieceInfo";
-import GrayGrid from "../components/organisms/GrayGrid";
 import { DeviceContext } from "../components/wrappers/GlobalWrapper";
-import PieceInfoNew from "../components/organisms/PieceInfoNew";
+import { formatDate } from "../utilities/formatDate";
+import AllPiecesMenu from "../components/organisms/AllPiecesMenu";
 
 const GALLERY_QUERY = `*[_type == "gallery"]{
   works[]->{
@@ -29,13 +29,13 @@ export async function loader() {
 }
 
 const Gallery = () => {
-  const navigate = useNavigate();
-
   const device = useContext(DeviceContext);
 
   const galleryWorks = useLoaderData() as PreviewArtPiece[];
 
   const [currentWork, setcurrentWork] = useState(galleryWorks[0]);
+  const [currentWorkNum, setCurrentWorkNum] = useState(1);
+  const [showFullMenu, setShowFullMenu] = useState(false);
 
   const worksScrollRef = useRef<HTMLDivElement>(null);
 
@@ -56,51 +56,54 @@ const Gallery = () => {
     };
   }, []);
 
-  const handleRescale = (work: PreviewArtPiece, scale: number) => {
+  const handleRescale = (
+    work: PreviewArtPiece,
+    scale: number,
+    workNum: number
+  ) => {
     // If scale > 0.3, this piece is bigger than all the others.
     if (scale > 0.3) {
       setcurrentWork(work);
+      setCurrentWorkNum(workNum);
     }
   };
 
   return (
     <div
-      className="relative h-screen w-screen py-[30vh] flex flex-col overflow-y-scroll no-scrollbar snap-y snap-mandatory bg-primary-gray text-white font-optima overscroll-contain"
+      className="h-screen w-screen bg-primary-gray flex flex-col items-center gap-y-4 py-[30vh] snap-y snap-mandatory overflow-y-scroll no-scrollbar"
       ref={worksScrollRef}
     >
-      <GrayGrid />
-      <PieceInfoNew title={currentWork.title} date={currentWork.date} focus="highlights" />
-      {/* ACTUAL CONTENT STARTS HERE */}
-      <div className="fixed top-0 h-screen w-screen overflow-hidden grid grid-rows-9 grid-cols-[10fr_8fr_3fr_9fr] md:grid-cols-[3fr_8fr_3fr_9fr] pointer-events-none">
-        <div className="col-start-2 col-end-5 row-start-1 row-end-3 md:col-start-4 md:col-end-5 md:row-start-3 md:row-end-8 grid place-items-center justify-items-end overflow-hidden z-999">
-          <PieceInfo title={currentWork.title} date={currentWork.date} />
+      <div className="fixed top-0 h-full w-full grid grid-rows-[1fr_1px_1fr] grid-cols-none text-primary-blue">
+        <div className="row-start-1 row-end-2 flex flex-row items-end justify-between px-4">
+          <span className="font-optima text-3xl">
+            {currentWork.title} {formatDate(currentWork.date)}
+          </span>
+          <span
+            className="cursor-pointer font-source-han-serif text-2xl font-light"
+            onClick={() => setShowFullMenu(true)}
+          >
+            menu
+          </span>
+        </div>
+        <div className="row-start-2 row-end-3 h-[1px] w-full bg-primary-blue" />
+        <div className="row-start-3 row-end-4 px-4">
+          <span className="font-optima-italic text-3xl">{currentWorkNum}.</span>
         </div>
       </div>
-      <div>
-        {galleryWorks.map((work) => (
-          <div
-            className="w-screen grid grid-cols-[6fr_8fr_3fr_9fr] md:grid-cols-[3fr_8fr_3fr_9fr] grid-rows-none z-1"
-            key={work._id}
-          >
-            <div className="relative col-start-1 col-end-2 -translate-y-1/2">
-              <div className="absolute top-100 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[3vmin] aspect-[1/1] bg-white rounded-full" />
-              <div className="absolute left-1/2 -translate-x-1/2 -translate-y-1/4 bg-white h-[300%] w-[0.5vmin]" />
-            </div>
-            <ExpandingDiv
-              className="h-[60vh] md:h-[80vh] col-start-2 col-end-5 md:col-end-4 flex-shrink-0 pr-4 md:pr-0 flex justify-start items-center origin-left snap-center"
-              style={{
-                marginTop: device === "desktop" ? "-15vh" : "-7vh",
-                marginBottom: device === "desktop" ? "-15vh" : "-7vh",
-              }}
-              readScale={(scale) => handleRescale(work, scale)}
-              scrollContainerRef={worksScrollRef as RefObject<HTMLDivElement>}
-              onClick={() => navigate(`/illustration/${work.slug.current}`)}
-            >
-              <GalleryImage work={work} />
-            </ExpandingDiv>
-          </div>
-        ))}
-      </div>
+      {galleryWorks.map((work, key) => (
+        <ExpandingDiv
+          key={work._id}
+          className="h-[60vh] md:h-[60vh] w-full max-w-[60%] col-start-2 flex-shrink-0 flex justify-center items-center origin-center snap-center"
+          style={{
+            marginTop: device === "desktop" ? "-7vh" : "-7vh",
+            marginBottom: device === "desktop" ? "-7vh" : "-7vh",
+          }}
+          readScale={(scale) => handleRescale(work, scale, key + 1)}
+          scrollContainerRef={worksScrollRef as RefObject<HTMLDivElement>}
+        >
+          <GalleryImage work={work} />
+        </ExpandingDiv>
+      ))}
     </div>
   );
 };

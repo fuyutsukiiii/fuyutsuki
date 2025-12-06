@@ -79,7 +79,7 @@ const PieceContent = () => {
       >
         <GrayGrid horizontal={true} />
         <div className="snap-end">
-          <div className="w-screen px-8 md:px-16 py-16 flex flex-col items-start justify-around gap-4 font-optima text-primary-blue drop-shadow-lg">
+          <div className="w-screen px-8 md:px-16 py-16 pt-24 flex flex-col items-start justify-around gap-4 font-optima text-primary-blue drop-shadow-lg">
             <span className="text-3xl md:text-8xl font-optima-italic">
               {title}
             </span>

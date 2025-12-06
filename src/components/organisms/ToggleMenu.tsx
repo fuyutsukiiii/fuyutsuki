@@ -27,13 +27,14 @@ const ToggleMenu = () => {
         animate={{ width: targetWidth }}
         transition={{
           duration: 0.25,
-          ease: "easeOut",
+          ease: "easeInOut",
         }}
         whileHover={{ width: "100%" }}
       >
         <span
           className="cursor-default"
           ref={menuButtonRef}
+          onClick={() => setTargetWidth("100%")}
         >
           MENU
         </span>

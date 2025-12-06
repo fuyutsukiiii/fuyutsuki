@@ -83,11 +83,8 @@ const Home = () => {
   }, [scrollBufferRef.current]);
 
   return (
-    <div
-      className="relative bg-primary-gray overflow-y-scroll no-scrollbar snap-y snap-proximity md:overscroll-contain"
-      style={{ height: "100dvh", width: "100dvw" }}
-    >
-      <div className="relative flex-shrink-0 h-screen w-screen flex flex-col bg-primary-gray text-primary-blue overscroll-contain snap-end">
+    <div className="relative h-dvh w-dvw bg-primary-gray overflow-y-scroll no-scrollbar snap-y snap-proximity md:overscroll-contain">
+      <div className="relative flex-shrink-0 h-dvh w-screen flex flex-col bg-primary-gray text-primary-blue overscroll-contain snap-end">
         <Grid />
         <div className="absolute left-4 top-4 bottom-8 right-4 md:inset-4 grid grid-rows-[3fr_7fr_3fr_3fr_7fr_7fr_2fr_2fr_4fr] grid-cols-[3fr_2fr_1fr_9fr] md:grid-rows-[3fr_1fr_8fr_3fr_2fr] md:grid-cols-[4fr_6fr] z-1 overflow-visible">
           <div className="col-span-full md:row-start-1 md:row-end-3 md:pl-12 flex items-end justify-center md:items-center md:justify-start gap-12">
@@ -201,8 +198,8 @@ const Home = () => {
           )}
           {/* Gallery Scroll (Mobile) */}
           {device === "mobile" && (
-            <div className="outline-1 col-start-1 col-end-5 row-start-8 row-end-10 flex flex-col items-center justify-start pb-4 gap-1">
-              <div className="font-bold-inter text-3xl tracking-[1rem] text-center p-0 m-0 outline-1">
+            <div className="col-start-1 col-end-5 row-start-8 row-end-10 flex flex-col items-center justify-center pb-4 gap-1">
+              <div className="font-bold-inter text-3xl tracking-[1rem] text-center p-0 m-0">
                 GALLERY
               </div>
               <BouncingArrow bounce={navigatePercentScroll < 0.5} />

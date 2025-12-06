@@ -8,7 +8,6 @@ import {
   type RefObject,
 } from "react";
 import { DeviceContext } from "../wrappers/GlobalWrapper";
-import LoadingImagePlaceholder from "../molecules/LoadingImagePlaceholder";
 
 interface Props {
   urls: string[];

@@ -44,9 +44,15 @@
   font-weight: bold;
   font-style: normal;
 }
+
 @font-face {
   font-family: 'Helvetica';
   src: url('/fonts/Helvetica.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Source Han Serif';
+  src: url('../fonts/SourceHanSerifSC-VF.otf.woff2') format('woff2-variations');  
 }
 
 @layer utilities {
@@ -73,6 +79,10 @@
   font-style: italic;
   }
 
+.font-source-han-serif {
+  font-family: 'Source Han Serif', serif;
+  font-weight: 300;
+}
 
 .font-major-mono-display {
   font-family: "Major Mono Display", monospace;
@@ -92,6 +102,11 @@
 
 .font-helvetica {
   font-family: 'Helvetica', sans-serif;
+}
+
+.font-helvetica-bold {
+  font-family: 'Helvetica-Bold', sans-serif;
+  font-weight: bold;
 }
 
 @theme {

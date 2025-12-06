@@ -39,13 +39,11 @@ const AllPiecesMarquee = ({ pieces, currentPieceReader }: Props) => {
   useEffect(() => {
     const totalHeight = scrollRef.current!.scrollHeight;
     const endpoint = -0.5 * totalHeight - 8;
-    console.log(y.get());
     if (finishingAnimation) {
       controls = animate(y, [y.get(), endpoint], {
         duration: speed * pieces.length * (1 - y.get() / endpoint),
         ease: "linear",
         onComplete: () => {
-          console.log(y.get());
           setFinishingAnimation(false);
           setRerender((prev) => !prev);
         },
@@ -70,7 +68,6 @@ const AllPiecesMarquee = ({ pieces, currentPieceReader }: Props) => {
         style={{ y }}
         onHoverStart={() => {
           setFinishingAnimation(true);
-          console.log(y.get());
           setSpeed(25);
         }}
         onHoverEnd={() => {
