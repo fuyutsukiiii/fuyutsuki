@@ -13,7 +13,7 @@ import Piece from "./pages/Piece";
 import Contact from "./pages/Contact";
 import Layout from "./pages/TopOverlay";
 import GlobalWrapper from "./components/wrappers/GlobalWrapper";
-import Testing from "./pages/Testing";
+// import Testing from "./pages/Testing";
 
 const router = createBrowserRouter([
   {
@@ -45,11 +45,11 @@ const router = createBrowserRouter([
             path: "piece-not-found",
             element: <div>Piece not found</div>,
           },
-          {
-            path: "test",
-            element: <Testing />,
-            loader: galleryLoader,
-          },
+          // {
+          //   path: "test",
+          //   element: <Testing />,
+          //   loader: galleryLoader,
+          // },
           {
             path: "*",
             element: <Navigate to="/home" replace />,

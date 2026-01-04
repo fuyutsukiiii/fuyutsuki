@@ -1,8 +1,8 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { useLoaderData, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import AllPiecesMenu from "./AllPiecesMenu";
-import type { PreviewArtPiece, ProcessedPiece } from "../../../Types";
+import type { PreviewArtPiece } from "../../../Types";
 
 export const showFullMenu = createContext(false);
 
@@ -11,7 +11,7 @@ const TopOverlay = () => {
 
   const [page, setPage] = useState("");
   const [pageSubtext, setPageSubtext] = useState("");
-  const [showMenu, setShowMenu] = useState(false);
+  const [showMenu, _setShowMenu] = useState(false);
 
   const galleryWorks = useLoaderData() as PreviewArtPiece[];
 

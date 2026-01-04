@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const DesktopDropdownMenu = () => {

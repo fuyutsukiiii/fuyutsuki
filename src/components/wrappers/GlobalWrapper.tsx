@@ -49,6 +49,7 @@ const GlobalWrapper = () => {
 
   return (
     <>
+      <div className="fixed h-screen w-screen bg-primary-gray" />
       <PiecesContext value={pieces}>
         <DeviceContext value={device}>
           <InitialLoadWrapper>

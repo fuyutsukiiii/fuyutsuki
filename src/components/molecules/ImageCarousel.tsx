@@ -1,5 +1,4 @@
-import { AnimatePresence, motion, useAnimate } from "framer-motion";
-import { useEffect } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import type { HomePiece } from "../../../Types";
 import { urlFor } from "../../sanity/utils";
 

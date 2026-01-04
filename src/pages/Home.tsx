@@ -51,7 +51,7 @@ const Home = () => {
   const currentPiece = works[index];
 
   // Need this to force rerender for correct z-indexing
-  const [dummyLegacyState, setDummyLegacyState] = useState(0);
+  const [_dummyLegacyState, setDummyLegacyState] = useState(0);
 
   useEffect(() => {
     if (carouselRef.current) {

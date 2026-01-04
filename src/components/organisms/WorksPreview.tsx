@@ -1,5 +1,4 @@
 import type { HomePiece } from "../../../Types";
-import useTimer from "../../hooks/useTimer";
 
 interface Props {
   works: HomePiece[];
@@ -7,9 +6,7 @@ interface Props {
   className?: string;
 }
 
-const WorksPreview = ({ works, cycleDuration, className }: Props) => {
-  const [time] = useTimer();
-
+const WorksPreview = ({ works, className }: Props) => {
   return (
     <div className={className}>
       {works.map((work) => (

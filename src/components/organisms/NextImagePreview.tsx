@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import TopDownExpand from "../atoms/TopDownExpand";
-import { useNavigate } from "react-router-dom";
 
 interface Props {
   progress: number;
@@ -8,8 +7,6 @@ interface Props {
 }
 
 const NextImagePreview = ({ progress }: Props) => {
-  const navigate = useNavigate();
-
   // Translating progress: [0, 20, 100] to [0, 0, 100]
   let translatedProgress;
   if (progress <= 20) {

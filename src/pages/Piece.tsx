@@ -4,8 +4,6 @@ import ImageStack from "../components/organisms/ImageStack";
 import NextImagePreview from "../components/organisms/NextImagePreview";
 import { PortableText } from "@portabletext/react";
 import { PiecesContext } from "../components/wrappers/GlobalWrapper";
-import DesktopDropdownMenu from "../components/molecules/DesktopDropdownMenu";
-import MobileScrollMenu from "../components/molecules/MobileScrollMenu";
 import PieceBackButton from "../components/molecules/PieceBackButton";
 
 // Wrapping the piece page with a component with a key to force re-rendering

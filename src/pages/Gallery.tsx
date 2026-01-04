@@ -6,7 +6,6 @@ import type { PreviewArtPiece } from "../../Types";
 import ExpandingDiv from "../components/atoms/ExpandingDiv";
 import GalleryImage from "../components/atoms/GalleryImage";
 import { DeviceContext } from "../components/wrappers/GlobalWrapper";
-import { formatDate } from "../utilities/formatDate";
 import DesktopDropdownMenu from "../components/molecules/DesktopDropdownMenu";
 import MobileScrollMenu from "../components/molecules/MobileScrollMenu";
 
@@ -69,7 +68,7 @@ const Gallery = () => {
 
   return (
     <div
-      className="h-screen w-screen bg-primary-gray flex flex-col items-center gap-y-0 py-[35vh] sm:py-[30vh] snap-y snap-mandatory overflow-y-scroll no-scrollbar"
+      className="h-screen w-screen bg-primary-gray flex flex-col items-center py-[35vh] sm:py-[30vh] snap-y snap-mandatory overflow-y-scroll no-scrollbar overscroll-none"
       ref={worksScrollRef}
     >
       <div className="fixed top-0 h-full w-full grid grid-rows-[1fr_1px_1fr] grid-cols-none text-primary-blue pointer-events-none">
