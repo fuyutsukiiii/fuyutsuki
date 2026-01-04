@@ -1,10 +1,12 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import ImageStack from "../components/organisms/ImageStack";
 import NextImagePreview from "../components/organisms/NextImagePreview";
 import { PortableText } from "@portabletext/react";
-import GrayGrid from "../components/organisms/GrayGrid";
 import { PiecesContext } from "../components/wrappers/GlobalWrapper";
+import DesktopDropdownMenu from "../components/molecules/DesktopDropdownMenu";
+import MobileScrollMenu from "../components/molecules/MobileScrollMenu";
+import PieceBackButton from "../components/molecules/PieceBackButton";
 
 // Wrapping the piece page with a component with a key to force re-rendering
 const Piece = () => {
@@ -22,33 +24,20 @@ const PieceContent = () => {
   const [percentToNextPiece, setPercentToNextPiece] = useState(0);
 
   const pieces = useContext(PiecesContext);
-  // This should NEVER run, alternative is requerying though
-  if (!pieces) {
-    window.location.href = "/gallery";
-    return null;
-  }
 
-  const currentPieceIndex = pieces?.findIndex(
+  const currentPiece = pieces.find(
+    (piece) => piece.slug.current === pieceSlug
+  )!;
+  const currentPieceIndex = pieces.findIndex(
     (piece) => piece.slug.current === pieceSlug
   );
-  if (currentPieceIndex === -1) {
-    window.location.href = "/gallery";
-    return null;
-  }
+  const nextPiece =
+    pieces[currentPieceIndex == pieces.length - 1 ? 0 : currentPieceIndex + 1];
 
-  const currentPiece = pieces[currentPieceIndex];
-  const nextPiece = pieces[(currentPieceIndex + 1) % pieces.length];
-  const title = currentPiece.title;
-  const date = currentPiece.date;
-  const description = currentPiece.description;
-  const pieceUrls = currentPiece.urls;
-  const highResUrls = currentPiece.highResUrls;
-  const loadingUrls = currentPiece.loadingUrls;
-  const nextPieceUrl = nextPiece.slug.current;
-
-  const navigateToNext = () => {
-    navigate(`/illustration/${nextPieceUrl}`);
-  };
+  const navigateToNext = useCallback(() => {
+    if (!nextPiece) return;
+    navigate(`/illustration/${nextPiece.slug.current}`);
+  }, [nextPiece]);
 
   useEffect(() => {
     if (!scrollBufferRef.current) return;
@@ -69,7 +58,7 @@ const PieceContent = () => {
     return () => {
       observer.disconnect();
     };
-  }, [scrollBufferRef]);
+  }, [scrollBufferRef, nextPiece]);
 
   return (
     <>
@@ -77,21 +66,31 @@ const PieceContent = () => {
         className="relative h-screen w-screen bg-primary-gray overflow-y-scroll no-scrollbar snap-y snap-mandatory md:overscroll-contain"
         ref={pageScrollRef}
       >
-        <GrayGrid horizontal={true} />
-        <div className="snap-end">
-          <div className="w-screen px-8 md:px-16 py-16 pt-24 flex flex-col items-start justify-around gap-4 font-optima text-primary-blue drop-shadow-lg">
-            <span className="text-3xl md:text-8xl font-optima-italic">
-              {title}
-            </span>
-            <div className="w-full flex flex-row justify-between items-center text-lg md:text-3xl">
-              <span className="text-3xl">{date}</span>
-              <PortableText value={description} />
+        <div className="fixed top-0 h-full w-full grid grid-rows-[1fr_1px_1fr] grid-cols-none text-primary-blue">
+          <div className="row-start-3 row-end-4 flex flex-row items-start justify-end px-4">
+            <div className="font-source-han-serif text-md sm:text-xl pointer-events-auto">
+              {/* <DesktopDropdownMenu /> */}
             </div>
           </div>
-          <ImageStack urls={pieceUrls} highResUrls={highResUrls} loadingUrls={loadingUrls} scrollRef={pageScrollRef} />
-          <NextImagePreview progress={percentToNextPiece * 100} />
+          {/* <div className="hidden sm:block row-start-2 row-end-3 h-[1px] w-full bg-primary-blue" /> */}
         </div>
+        {currentPiece && (
+          <div className="snap-end">
+            <div className="w-screen px-8 md:px-16 py-16 pt-24 flex flex-col items-start justify-around gap-4 font-optima text-primary-blue drop-shadow-lg">
+              <span className="text-3xl md:text-8xl font-optima-italic">
+                {currentPiece.title}
+              </span>
+              <div className="w-full flex flex-row justify-between items-center text-lg md:text-3xl">
+                <span className="text-3xl">{currentPiece.date}</span>
+                <PortableText value={currentPiece.description} />
+              </div>
+            </div>
+            <ImageStack piece={currentPiece} scrollRef={pageScrollRef} />
+            <NextImagePreview progress={percentToNextPiece * 100} />
+          </div>
+        )}
         <div className="h-[12.5vh] w-screen" ref={scrollBufferRef} />
+        <PieceBackButton />
       </div>
     </>
   );

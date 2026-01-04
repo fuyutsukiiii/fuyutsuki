@@ -8,7 +8,7 @@ const InitialLoadWrapper = ({ children }: Props) => {
 
   return (
     <div
-      className="relative h-screen w-screen"
+      className="relative h-screen w-screen selection:text-white selection:bg-primary-blue/100"
     >
       <motion.div
         className="absolute inset-0 z-100 pointer-events-none backdrop-blur-lg"

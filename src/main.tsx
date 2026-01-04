@@ -13,7 +13,6 @@ import Piece from "./pages/Piece";
 import Contact from "./pages/Contact";
 import Layout from "./pages/TopOverlay";
 import GlobalWrapper from "./components/wrappers/GlobalWrapper";
-import NewGallery from "./pages/NewGallery";
 import Testing from "./pages/Testing";
 
 const router = createBrowserRouter([
@@ -31,11 +30,6 @@ const router = createBrowserRouter([
           {
             path: "gallery",
             element: <Gallery />,
-            loader: galleryLoader,
-          },
-          {
-            path: "new-gallery",
-            element: <NewGallery />,
             loader: galleryLoader,
           },
           {

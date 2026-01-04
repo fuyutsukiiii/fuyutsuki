@@ -12,7 +12,7 @@ const AllPiecesMenu = ({ pieces }: Props) => {
   const pixivLink = "https://www.pixiv.net/en/users/6427643";
 
   return (
-    <div className="fixed h-max w-full flex flex-col gap-30 px-8 sm:px-12">
+    <div className="fixed h-max w-full flex flex-col pt-12 sm:pt-0 gap-30 px-8 sm:px-12">
       <div>
         <AllPiecesGrid pieces={pieces} />
       </div>

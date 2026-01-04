@@ -7,40 +7,34 @@ export interface PreviewArtPiece {
   slug: {
     current: string;
   };
-  images: object[];
+  images: SanityImage[];
 }
 
 export interface HomePiece {
   _id: string;
   title: string;
-  images: object[];
+  images: SanityImage[];
 }
 
 export interface FullPiece {
   title: string;
   date: string;
   description: PortableTextBlock;
-  images: object[];
+  images: SanityImage[];
 }
 
 export interface FullPieceWithSlug {
   title: string;
   date: string;
   description: PortableTextBlock;
-  images: object[];
+  images: SanityImage[];
   slug: {
     current: string;
   };
 }
 
-export interface ProcessedPiece {
-  title: string;
-  date: string;
-  description: PortableTextBlock;
-  urls: string[];
-  highResUrls: string[];
-  loadingUrls: string[];
-  slug: {
-    current: string;
-  };
+interface SanityImage {
+  _key: string,
+  _type: string,
+  asset: object;
 }

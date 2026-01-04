@@ -50,7 +50,7 @@ const Home = () => {
   const index = Math.floor(time / CYCLE_DURATION) % works.length;
   const currentPiece = works[index];
 
-  // Need this to force rerender for corrent z-indexing
+  // Need this to force rerender for correct z-indexing
   const [dummyLegacyState, setDummyLegacyState] = useState(0);
 
   useEffect(() => {

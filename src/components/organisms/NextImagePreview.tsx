@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import TopDownExpand from "../atoms/TopDownExpand";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   progress: number;
@@ -7,6 +8,8 @@ interface Props {
 }
 
 const NextImagePreview = ({ progress }: Props) => {
+  const navigate = useNavigate();
+
   // Translating progress: [0, 20, 100] to [0, 0, 100]
   let translatedProgress;
   if (progress <= 20) {
@@ -26,8 +29,7 @@ const NextImagePreview = ({ progress }: Props) => {
   }, [divRef]);
 
   return (
-    <div className="relative h-[30vmin] w-screen grid grid-rows-1 grid-cols-1 place-items-center">
-      <div className="absolute top-[50%] bottom-0 w-full" />
+    <div className="relative h-[30vmin] w-screen grid grid-rows-1 grid-cols-1 place-items-center pointer-events-none">
       <div
         className="relative flex flex-col items-center justify-center text-white/60 font-optima select-none z-1"
         ref={divRef}

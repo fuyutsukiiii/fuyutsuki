@@ -8,16 +8,17 @@ interface Props {
 }
 
 const AllPiecesGrid = ({ pieces }: Props) => {
-
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-row flex-wrap justify-start sm:gap-x-[8%] sm:gap-y-20">
-      {pieces.map((piece, pieceNum) => (
-        <div className="flex flex-col items-center gap-2 height-0 grow-0 shrink-0 basis-[10%]">
+    <div className="flex flex-row flex-wrap justify-start gap-x-[20%] gap-y-12 sm:gap-x-[8%] sm:gap-y-20">
+      {pieces.map((piece, _pieceNum) => (
+        <div
+          className="flex flex-col items-center gap-2 height-0 grow-0 shrink-0 basis-[35%] sm:basis-[10%]"
+          key={piece._id}
+        >
           <motion.div
             className="h-full w-full shadow-[0px_0px_20px_rgba(0,0,0,0.5)]"
-            key={piece._id}
             initial={{ scale: 1 }}
             animate={{ scale: 1 }}
             whileHover={{ scale: 0.95 }}

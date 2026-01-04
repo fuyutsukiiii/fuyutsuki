@@ -1,17 +1,15 @@
 import { createContext, useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
-import type { FullPieceWithSlug, ProcessedPiece } from "../../../Types";
+import type { FullPieceWithSlug } from "../../../Types";
 import { client } from "../../sanity/client";
-import { urlFor } from "../../sanity/utils";
 import InitialLoadWrapper from "./InitialLoadWrapper";
 
 export const DeviceContext = createContext<"desktop" | "mobile">("desktop");
-export const PiecesContext = createContext<ProcessedPiece[]>([]);
+export const PiecesContext = createContext<FullPieceWithSlug[]>([]);
 
 const GlobalWrapper = () => {
   const [device, setDevice] = useState<"desktop" | "mobile">("desktop");
-  const [pieces, setPieces] = useState<ProcessedPiece[]>([]);
-
+  const [pieces, setPieces] = useState<FullPieceWithSlug[]>([]);
   useEffect(() => {
     const handleResize = () => {
       const width = window.innerWidth;
@@ -36,37 +34,7 @@ const GlobalWrapper = () => {
       const result = await client.fetch(ALL_VISIBLE_PIECES_QUERY);
       const allPieces = result[0].works as FullPieceWithSlug[];
 
-      const allProcessedPieces = allPieces.map((piece) => ({
-        ...piece,
-        images: undefined,
-        urls: piece.images.map((image) => {
-          return urlFor(image)
-            .auto("format")
-            .quality(100)
-            .fit("clip")
-            .width(window.innerWidth)
-            .url();
-        }),
-        highResUrls: piece.images.map((image) => {
-          return urlFor(image)
-            .auto("format")
-            .quality(100)
-            .fit("clip")
-            .width(window.innerWidth * 3)
-            .url();
-        }),
-        loadingUrls: piece.images.map((image) => {
-          return urlFor(image)
-            .auto("format")
-            .fit("clip")
-            .width(50)
-            .quality(1)
-            .blur(99)
-            .url();
-        }),
-      }));
-
-      setPieces(allProcessedPieces);
+      setPieces(allPieces);
     };
 
     getAllPieces();

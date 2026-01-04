@@ -1,21 +1,14 @@
-import { motion, transform, useAnimation } from "framer-motion";
-import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 interface Props {
+  showMenu: boolean;
   onClick: () => void;
 }
 
-const OverlayMenuButton = ({ onClick }: Props) => {
-  const [active, setActive] = useState(false);
-
-  const handleClick = () => {
-    setActive(!active);
-    onClick();
-  };
-
+const OverlayMenuButton = ({ showMenu, onClick }: Props) => {
   return (
     <div
-      className="relative h-full w-full aspect-square cursor-pointer"
-      onClick={handleClick}
+      className="relative h-full w-full aspect-square cursor-pointer -rotate-90"
+      onClick={onClick}
     >
       {Array.from({ length: 3 }).map((_, index) => {
         const open = {
@@ -33,7 +26,7 @@ const OverlayMenuButton = ({ onClick }: Props) => {
             className="absolute top-[40%] h-[22%] w-full flex flex-row justify-between"
             variants={{ closed, open }}
             transition={{ ease: "easeInOut", duration: 0.1 }}
-            animate={active ? "open" : "closed"}
+            animate={showMenu ? "open" : "closed"}
           >
             {Array.from({ length: 3 }).map((_, gridIndex) => {
               return (

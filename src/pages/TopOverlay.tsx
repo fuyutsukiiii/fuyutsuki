@@ -1,4 +1,4 @@
-import { Outlet, useLoaderData, useLocation } from "react-router-dom";
+import { Outlet, useLoaderData, useLocation, useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import AllPiecesMenu from "../components/organisms/AllPiecesMenu";
 import CrossfadeWrapper from "../components/wrappers/CrossfadeWrapper";
@@ -12,6 +12,7 @@ const TopOverlay = () => {
   const [showMenu, setShowMenu] = useState(false);
 
   const location = useLocation();
+  const navigate = useNavigate();
 
   const [page, setPage] = useState("");
   const [pageSubtext, setPageSubtext] = useState("");
@@ -33,8 +34,20 @@ const TopOverlay = () => {
   }, [location.pathname]);
 
   useEffect(() => {
-    if (page === "GALLERY") {
-      setPageSubtext(!showMenu ? "Look - 01" : "Look - 02");
+    if (showMenu) {
+      setPage("GALLERY");
+      setPageSubtext("Look - 02");
+    } else {
+      const page = location.pathname
+        .replace("/", "")
+        .toLocaleUpperCase()
+        .split("/")[0];
+      setPage(page);
+      if (page === "GALLERY") {
+        setPageSubtext("Look - 01");
+      } else {
+        setPageSubtext("");
+      }
     }
   }, [showMenu]);
 
@@ -52,7 +65,7 @@ const TopOverlay = () => {
     <>
       <CrossfadeWrapper>
         <div
-          className="fixed h-screen w-screen left-0 top-0 flex flex-col sm:gap-12 overflow-y-scroll p-4 z-10 no-scrollbar"
+          className="fixed top-0 bottom-0 right-0 left-0 flex flex-col sm:gap-12 overflow-y-scroll py-4 px-3 sm:p-4 z-10 no-scrollbar"
           style={
             showMenu
               ? { pointerEvents: "auto", backdropFilter: "blur(44px)" }
@@ -61,19 +74,20 @@ const TopOverlay = () => {
         >
           <div className="sticky top-0 w-full flex flex-row items-start justify-between z-1">
             <div className="row-start-1 row-end-2 flex flex-col items-start">
-              <span className="font-helvetica-bold text-5xl">
-                {page}
-              </span>
-              <span className="font-optima-italic text-3xl text-primary-blue leading-tight">
+              <span className="font-helvetica-bold text-4xl sm:text-5xl pointer-events-auto cursor-pointer" onClick={() => navigate("/home")}>{page}</span>
+              <span className="font-optima-italic text-2xl sm:text-3xl text-primary-blue leading-tight">
                 {pageSubtext}
               </span>
             </div>
             <div className="col-start-3 col-end-4 flex flex-row items-start justify-end z-9999 pointer-events-auto">
               <div className="size-7">
-                <OverlayMenuButton onClick={() => setShowMenu(!showMenu)} />
+                <OverlayMenuButton
+                  showMenu={showMenu}
+                  onClick={() => setShowMenu(!showMenu)}
+                />
               </div>
             </div>
-            <span className="absolute left-1/2 -translate-x-1/2 font-optima-italic text-lg text-primary-blue">
+            <span className="hidden sm:block absolute left-1/2 -translate-x-1/2 font-optima-italic text-lg text-primary-blue">
               FUYUTSUKI Portfolio
             </span>
           </div>

@@ -8,29 +8,29 @@ import {
   type RefObject,
 } from "react";
 import { DeviceContext } from "../wrappers/GlobalWrapper";
+import type { FullPieceWithSlug } from "../../../Types";
+import { urlFor } from "../../sanity/utils";
 
 interface Props {
-  urls: string[];
-  highResUrls: string[];
-  loadingUrls: string[];
+  piece: FullPieceWithSlug;
   scrollRef: RefObject<HTMLElement | null>;
 }
 
-const ImageStack = ({ urls, highResUrls, loadingUrls, scrollRef }: Props) => {
+const ImageStack = ({ piece, scrollRef }: Props) => {
   const device = useContext(DeviceContext);
 
   const [initialScroll, setInitialScroll] = useState(0);
 
   const [canZoom, setCanZoom] = useState(false);
   const [inView, setInView] = useState(false);
-  const [zoomedUrl, setZoomedUrl] = useState<string | null>(null);
+  const [zoomedPieceIndex, setZoomedPieceIndex] = useState(-1); // url of the zoomed image
   const [loadedImages, setLoadedImages] = useState(new Set<number>());
 
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setInView(urls.length === 1);
-    setCanZoom(urls.length === 1);
+    setInView(piece.images.length === 1);
+    setCanZoom(piece.images.length === 1);
 
     if (!ref.current) return;
     if (!scrollRef.current) return;
@@ -40,7 +40,6 @@ const ImageStack = ({ urls, highResUrls, loadingUrls, scrollRef }: Props) => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (inView) return; // Don't observe if already in view
-        // Logs the percentage of the element visible in the viewport (0 to 1)
         if (entry.intersectionRatio >= 0.9) {
           setCanZoom(true);
           setInView(true);
@@ -74,14 +73,14 @@ const ImageStack = ({ urls, highResUrls, loadingUrls, scrollRef }: Props) => {
     }
   }, [device, scrollRef, ref]);
 
-  const handleZoom = (url: string | null) => {
+  const handleZoom = (index: number) => {
     if (canZoom) {
-      setZoomedUrl(url);
+      setZoomedPieceIndex(index);
     }
   };
 
   useEffect(() => {
-    if (!zoomedUrl) {
+    if (zoomedPieceIndex === -1) {
       document.body.style.overflow = "";
       return;
     }
@@ -89,31 +88,31 @@ const ImageStack = ({ urls, highResUrls, loadingUrls, scrollRef }: Props) => {
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        setZoomedUrl(null);
+        setZoomedPieceIndex(-1);
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [zoomedUrl]);
+  }, [zoomedPieceIndex]);
 
   return (
     <motion.div
-      className="relative w-screen overflow-visible flex flex-col items-center justify-start no-scrollbar gap-4"
+      className="relative m-auto w-max overflow-visible flex flex-col items-center justify-start no-scrollbar gap-4"
       // Only animate if there are multiple pieces, otherwise the image stack doesn't really make sense.
     >
-      {urls.map((url, index) => {
+      {piece.images.map((image, index) => {
         const randomTilt = useMemo(() => Math.random() * 20 - 10, []);
 
         return (
-          <div key={url.toString() + index}>
+          <div key={image._key}>
             <motion.div
-              className="h-[100vmin] w-[85vw] md:w-[90vw] flex-shrink-0 flex justify-center items-center"
+              className="h-[100vmin] w-[85vw] flex-shrink-0 flex justify-center items-center"
               initial={{
                 y: `-${100 * index}%`,
-                scale: urls.length === 1 ? 1 : 0.6,
-                rotate: urls.length === 1 ? "0deg" : `${randomTilt}deg`,
+                scale: piece.images.length === 1 ? 1 : 0.6,
+                rotate: piece.images.length === 1 ? "0deg" : `${randomTilt}deg`,
               }}
               animate={
                 inView
@@ -124,35 +123,123 @@ const ImageStack = ({ urls, highResUrls, loadingUrls, scrollRef }: Props) => {
                       rotate: `${randomTilt}deg`,
                     }
               }
-              transition={{ duration: 0.6 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
               ref={index === 0 ? ref : undefined}
             >
+              {/* Placeholder */}
               {!loadedImages.has(index) && (
-                <img className="h-full w-full object-contain" src={loadingUrls[index]} />
+                <img
+                  className="absolute h-full w-full object-contain"
+                  src={urlFor(image)
+                    .auto("format")
+                    .fit("clip")
+                    .width(50)
+                    .quality(1)
+                    .blur(99)
+                    .url()}
+                />
               )}
+              {/* Default Image */}
               <img
                 className="max-h-full max-w-full object-contain z-1"
-                src={url}
+                srcSet={[
+                  urlFor(piece.images[0])
+                    .auto("format")
+                    .width(640)
+                    .fit("clip")
+                    .quality(100)
+                    .url() + " 640w",
+                  urlFor(piece.images[0])
+                    .auto("format")
+                    .width(768)
+                    .fit("clip")
+                    .quality(100)
+                    .url() + " 768w",
+                  urlFor(piece.images[0])
+                    .auto("format")
+                    .width(1024)
+                    .fit("clip")
+                    .quality(100)
+                    .url() + " 1024w",
+                  urlFor(piece.images[0])
+                    .auto("format")
+                    .width(1280)
+                    .fit("clip")
+                    .quality(100)
+                    .url() + " 1280w",
+                  urlFor(piece.images[0])
+                    .auto("format")
+                    .width(1536)
+                    .fit("clip")
+                    .quality(100)
+                    .url() + " 1536w",
+                ].join(", ")}
+                sizes="
+        (max-width: 640px) 640px,
+        (max-width: 768px) 768px,
+        (max-width: 1024px) 1024px,
+        (max-width: 1280px) 1280px,
+        1536px
+        "
+                alt={piece.title}
                 style={{ cursor: canZoom ? "zoom-in" : "default" }}
-                onClick={() => handleZoom(highResUrls[index])}
+                onClick={() => handleZoom(index)}
                 onLoad={() =>
                   setLoadedImages((prev) => new Set(prev).add(index))
                 }
               />
             </motion.div>
-            {zoomedUrl == highResUrls[index] && (
+            {/* Zoomed Image */}
+            {zoomedPieceIndex === index && (
               <div
-                key={highResUrls[index] + "-zoomed"}
-                className="fixed inset-0 bg-black/90 overflow-auto z-9999"
+                key={image._key + "-zoomed"}
+                className="fixed inset-0 bg-black/90 overflow-auto z-999"
                 style={{ cursor: "zoom-out" }}
-                onClick={() => setZoomedUrl(null)}
+                onClick={() => setZoomedPieceIndex(-1)}
               >
                 <img
                   className="m-0 block object-contain"
                   style={{ width: "200vw", height: "200vh" }}
-                  src={url}
-                  alt=""
-                  draggable={false}
+                  srcSet={[
+                    urlFor(piece.images[0])
+                      .auto("format")
+                      .width(960)
+                      .fit("clip")
+                      .quality(100)
+                      .url() + " 960w",
+                    urlFor(piece.images[0])
+                      .auto("format")
+                      .width(1152)
+                      .fit("clip")
+                      .quality(100)
+                      .url() + " 1152w",
+                    urlFor(piece.images[0])
+                      .auto("format")
+                      .width(1536)
+                      .fit("clip")
+                      .quality(100)
+                      .url() + " 1536w",
+                    urlFor(piece.images[0])
+                      .auto("format")
+                      .width(1920)
+                      .fit("clip")
+                      .quality(100)
+                      .url() + " 1920w",
+                    urlFor(piece.images[0])
+                      .auto("format")
+                      .width(2304)
+                      .fit("clip")
+                      .quality(100)
+                      .url() + " 2304w",
+                  ].join(", ")}
+                  sizes="
+        (max-width: 640px) 640px,
+        (max-width: 768px) 768px,
+        (max-width: 1024px) 1024px,
+        (max-width: 1280px) 1280px,
+        1536px
+        "
+                  alt={piece.title + " (zoomed)"}
                 />
               </div>
             )}
