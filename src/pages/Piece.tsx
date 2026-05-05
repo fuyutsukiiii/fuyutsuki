@@ -24,10 +24,10 @@ const PieceContent = () => {
   const pieces = useContext(PiecesContext);
 
   const currentPiece = pieces.find(
-    (piece) => piece.slug.current === pieceSlug
+    (piece) => piece.slug.current === pieceSlug,
   )!;
   const currentPieceIndex = pieces.findIndex(
-    (piece) => piece.slug.current === pieceSlug
+    (piece) => piece.slug.current === pieceSlug,
   );
   const nextPiece =
     pieces[currentPieceIndex == pieces.length - 1 ? 0 : currentPieceIndex + 1];
@@ -50,7 +50,7 @@ const PieceContent = () => {
       },
       {
         threshold: Array.from({ length: 101 }, (_, i) => i / 100),
-      }
+      },
     );
     observer.observe(scrollBufferRef.current);
     return () => {
@@ -64,14 +64,6 @@ const PieceContent = () => {
         className="relative h-screen w-screen bg-primary-gray overflow-y-scroll no-scrollbar snap-y snap-mandatory md:overscroll-contain"
         ref={pageScrollRef}
       >
-        <div className="fixed top-0 h-full w-full grid grid-rows-[1fr_1px_1fr] grid-cols-none text-primary-blue">
-          <div className="row-start-3 row-end-4 flex flex-row items-start justify-end px-4">
-            <div className="font-source-han-serif text-md sm:text-xl pointer-events-auto">
-              {/* <DesktopDropdownMenu /> */}
-            </div>
-          </div>
-          {/* <div className="hidden sm:block row-start-2 row-end-3 h-[1px] w-full bg-primary-blue" /> */}
-        </div>
         {currentPiece && (
           <div className="snap-end">
             <div className="w-screen px-8 md:px-16 py-16 pt-24 flex flex-col items-start justify-around gap-4 font-optima text-primary-blue drop-shadow-lg">
@@ -84,10 +76,12 @@ const PieceContent = () => {
               </div>
             </div>
             <ImageStack piece={currentPiece} scrollRef={pageScrollRef} />
+            {/* <div className="h-[10vh] w-full" /> */}
             <NextImagePreview progress={percentToNextPiece * 100} />
           </div>
         )}
-        <div className="h-[12.5vh] w-screen" ref={scrollBufferRef} />
+        {/* Padding */}
+        <div className="h-[20vh] w-screen" ref={scrollBufferRef} />
         <PieceBackButton />
       </div>
     </>

@@ -58,6 +58,7 @@
 @layer utilities {
   .no-scrollbar::-webkit-scrollbar {
     display: none;
+    scrollbar-width: none;
   }
   .no-scrollbar {
     -ms-overflow-style: none;
@@ -117,5 +118,5 @@
   --color-primary-blue: #0023E7;
   --color-primary-gray: #ebebeb;
   --color-accent-gray: #C7C7C7;
-  --color-dark-gray: #000;
+  --color-dark-gray: #808080;
 }

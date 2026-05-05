@@ -1,27 +1,35 @@
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const PieceBackButton = () => {
   const navigate = useNavigate();
 
   return (
-    <div
+    <motion.div
       onClick={() => {
         navigate("/gallery");
       }}
-      className="fixed bottom-8 left-8 flex flex-row items-center gap-2 cursor-pointer pointer-events-auto z-999999"
+      className="fixed bottom-4 sm:bottom-8 left-8 flex flex-row items-center gap-1 cursor-pointer pointer-events-auto z-999"
+      whileHover="active"
+      initial="inactive"
+      animate="inactive"
     >
-      <svg
+      <motion.svg
         className="size-4"
         viewBox="0 0 30 50"
         xmlns="http://www.w3.org/2000/svg"
+        variants={{
+          active: { x: -5 },
+          inactive: { x: 0 },
+        }}
       >
         <path
           className="stroke-primary-blue stroke-5 fill-none"
           d="M30 0 L0 25 L30 50"
         />
-      </svg>
+      </motion.svg>
       <span className="text-primary-blue font-optima text-lg">Back</span>
-    </div>
+    </motion.div>
   );
 };
 

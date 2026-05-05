@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-const MobileScrollMenu = () => {
+const MobileGalleryNavigation = () => {
   const location = useLocation()
     .pathname.replace("/", "")
     .toLocaleUpperCase()
@@ -25,7 +25,7 @@ const MobileScrollMenu = () => {
   };
 
   return (
-    <div className="sm:hidden fixed bottom-6 left-0 right-0 px-8 flex justify-between items-center gap-x-4 overflow-x-scroll text-xl text-primary-blue font-source-han-serif pointer-events-none z-999999">
+    <div className="sm:hidden relative bottom-12 left-0 right-0 px-8 flex justify-between items-center gap-x-4 overflow-x-scroll text-xl text-primary-blue font-source-han-serif pointer-events-none z-999999">
       <span className="overflow-hidden pointer-events-auto" onClick={toggleMenu}>
         menu
       </span>
@@ -82,4 +82,4 @@ const MobileScrollMenu = () => {
   );
 };
 
-export default MobileScrollMenu;
+export default MobileGalleryNavigation;

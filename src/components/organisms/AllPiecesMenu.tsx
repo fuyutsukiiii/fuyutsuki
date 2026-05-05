@@ -12,7 +12,7 @@ const AllPiecesMenu = ({ pieces }: Props) => {
   const pixivLink = "https://www.pixiv.net/en/users/6427643";
 
   return (
-    <div className="fixed h-max w-full flex flex-col pt-12 sm:pt-0 gap-30 px-8 sm:px-12">
+    <div className="h-max w-dvw flex flex-col pt-12 sm:pt-12 gap-30 px-8 sm:px-12 overflow-y-scroll no-scrollbar z-99999">
       <div>
         <AllPiecesGrid pieces={pieces} />
       </div>
@@ -27,7 +27,7 @@ const AllPiecesMenu = ({ pieces }: Props) => {
       </div>
       <div className="flex flex-col sm:flex-row justify-center sm:justify-between items-center font-helvetica text-md font-light mb-20">
         <span>Fuyutsuki. All Rights Reserved.</span>
-        <span>2023-2025</span>
+        <span>2023-2026</span>
         <div className="flex flex-row justify-center items-center gap-1">
           <Link to={twitterLink} className="hover:underline">
             Twitter

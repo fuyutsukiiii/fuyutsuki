@@ -9,6 +9,7 @@ interface Props {
   readDistance?: (cb: number) => void;
   scrollContainerRef?: React.RefObject<HTMLElement>;
   onClick?: () => void;
+  firstElementInList: boolean;
 }
 
 const ExpandingDiv = ({
@@ -19,19 +20,30 @@ const ExpandingDiv = ({
   readDistance,
   scrollContainerRef,
   onClick,
+  firstElementInList,
 }: Props) => {
   const divRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(0.2);
 
   useEffect(() => {
     const handleScrollOrResize = () => {
-
       if (divRef.current) {
         const rect = divRef.current.getBoundingClientRect();
         const divTop = rect.top;
         const divBottom = rect.bottom;
-        // If the div is completely out of view + a margin, skip calculations
-        if (divBottom < 0 - window.innerHeight * 0.1 || divTop > window.innerHeight * 1.1) {
+        // If the div is completely out of view + a margin, skip calculations *tried to remove for mobile number loading bug?
+        // if (divBottom < 0 - window.innerHeight * 0.1 || divTop > window.innerHeight * 1.1) {
+        //   return;
+        // }
+
+        const divMiddle = rect.top + rect.height / 2;
+
+        if (firstElementInList && divMiddle > window.innerHeight / 2) {
+          // If this is the first element in a list and it has not passed the midpoint of the screen yet, set the scale to 1.
+          setScale(1);
+          if (readScale) {
+            readScale(1);
+          }
           return;
         }
 

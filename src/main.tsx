@@ -11,9 +11,9 @@ import { StrictMode } from "react";
 import Gallery from "./pages/Gallery";
 import Piece from "./pages/Piece";
 import Contact from "./pages/Contact";
-import Layout from "./pages/TopOverlay";
+import Layout from "./pages/TopLevelOverlay";
 import GlobalWrapper from "./components/wrappers/GlobalWrapper";
-// import Testing from "./pages/Testing";
+import Testing from "./pages/Testing";
 
 const router = createBrowserRouter([
   {
@@ -28,11 +28,6 @@ const router = createBrowserRouter([
         loader: galleryLoader,
         children: [
           {
-            path: "gallery",
-            element: <Gallery />,
-            loader: galleryLoader,
-          },
-          {
             path: "contact",
             element: <Contact />,
           },
@@ -42,19 +37,24 @@ const router = createBrowserRouter([
             // loader: pieceLoader,
           },
           {
-            path: "piece-not-found",
-            element: <div>Piece not found</div>,
-          },
-          // {
-          //   path: "test",
-          //   element: <Testing />,
-          //   loader: galleryLoader,
-          // },
-          {
             path: "*",
             element: <Navigate to="/home" replace />,
           },
         ],
+      },
+      {
+        path: "gallery",
+        element: <Gallery />,
+        loader: galleryLoader,
+      },
+      {
+        path: "piece-not-found",
+        element: <div>Piece not found</div>,
+      },
+      {
+        path: "test",
+        element: <Testing />,
+        loader: galleryLoader,
       },
       {
         path: "/home",
