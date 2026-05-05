@@ -94,14 +94,14 @@ const HeroSection = ({ scrollContainerRef }: Props) => {
 
         <motion.img
           className="hidden sm:block absolute top-[44vh] left-[55vw] -translate-x-1/2 -translate-y-1/2 h-[47vh] w-auto object-contain z-0 pointer-events-none"
-          src="../public/fuyu-sign.png"
+          src="../fuyu-sign.png"
           alt="Fuyutsuki signature"
           style={{ y: textOffset }}
         />
         <motion.img
           className="absolute bottom-0 left-0 h-screen w-screen object-bottom object-contain z-2 pointer-events-none"
           style={{ y: imageOffset, zIndex: imgLayerIndex }}
-          src="../public/hero1.webp"
+          src="../hero1.webp"
           alt="Leise Hero Image"
         />
       </div>
