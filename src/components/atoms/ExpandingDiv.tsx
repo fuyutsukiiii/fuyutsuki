@@ -29,12 +29,6 @@ const ExpandingDiv = ({
     const handleScrollOrResize = () => {
       if (divRef.current) {
         const rect = divRef.current.getBoundingClientRect();
-        const divTop = rect.top;
-        const divBottom = rect.bottom;
-        // If the div is completely out of view + a margin, skip calculations *tried to remove for mobile number loading bug?
-        // if (divBottom < 0 - window.innerHeight * 0.1 || divTop > window.innerHeight * 1.1) {
-        //   return;
-        // }
 
         const divMiddle = rect.top + rect.height / 2;
 

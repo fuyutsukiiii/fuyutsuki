@@ -7,7 +7,6 @@ import ExpandingDiv from "../components/atoms/ExpandingDiv";
 import GalleryImage from "../components/atoms/GalleryImage";
 import { DeviceContext } from "../components/wrappers/GlobalWrapper";
 import DesktopDropdownMenu from "../components/molecules/DesktopDropdownMenu";
-import MobileGalleryNavigation from "../components/molecules/MobileGalleryNavigation";
 import HeroSection from "../components/organisms/HeroSection";
 import GalleryMenu from "../components/organisms/GalleryMenu";
 
