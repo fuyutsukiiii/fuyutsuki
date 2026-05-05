@@ -47,7 +47,7 @@ const HeroSection = ({ scrollContainerRef }: Props) => {
           style={{ y: textOffset }}
         >
           <div className="hidden sm:block absolute bottom-0 right-0 mb-4 mr-8 z-99">
-            <span className="absolute rotate-90 top-0 -translate-y-5/3 left-1/2 -translate-x-1/2 font-source-han-serif text-primary-blue">Scroll</span>
+            {/* <span className="absolute rotate-90 top-0 -translate-y-5/3 left-1/2 -translate-x-1/2 font-optima font-extralight text-primary-blue">Scroll</span> */}
             <ScrollIndicator />
           </div>
 
