@@ -1,6 +1,6 @@
 import { useState } from "react";
 import TextInput from "../molecules/TextInput";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import emailjs from "@emailjs/browser";
 
 const ContactForm = () => {

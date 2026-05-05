@@ -6,7 +6,7 @@ import { useLoaderData, useNavigate } from "react-router-dom";
 import GalleryButton from "../components/molecules/GalleryButton";
 import ImageCarousel from "../components/molecules/ImageCarousel";
 import type { HomePiece } from "../../Types";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { DeviceContext } from "../components/wrappers/GlobalWrapper";
 import BouncingArrow from "../components/atoms/BouncingArrow";
 import ToggleMenu from "../components/organisms/ToggleMenu";

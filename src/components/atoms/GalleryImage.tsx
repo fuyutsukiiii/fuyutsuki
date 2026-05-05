@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import type { PreviewArtPiece } from "../../../Types";
 import { urlFor } from "../../sanity/utils";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 
 interface Props {
   work: PreviewArtPiece;

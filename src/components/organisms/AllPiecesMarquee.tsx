@@ -4,7 +4,7 @@ import {
   useAnimation,
   useMotionValue,
   type AnimationPlaybackControlsWithThen,
-} from "framer-motion";
+} from "motion/react";
 import type { PreviewArtPiece } from "../../../Types";
 import { urlFor } from "../../sanity/utils";
 import { useEffect, useRef, useState } from "react";

@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform } from "motion/react";
 import ScrollIndicator from "../atoms/ScrollIndicator";
 
 const FINAL_TEXT_OFFSET = 200;

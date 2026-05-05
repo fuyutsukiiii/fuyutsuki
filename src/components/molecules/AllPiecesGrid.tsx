@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import type { PreviewArtPiece } from "../../../Types";
 import { urlFor } from "../../sanity/utils";
 import { useNavigate } from "react-router-dom";

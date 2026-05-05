@@ -1,5 +1,5 @@
 import { Outlet, useLoaderData, useNavigate } from "react-router-dom";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import { createContext, useEffect, useState } from "react";
 import type { PreviewArtPiece } from "../../../Types";
 import AllPiecesMenu from "./AllPiecesMenu";

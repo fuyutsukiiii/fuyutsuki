@@ -14,7 +14,7 @@ import {
   type VariantLabels,
   type Target,
   type TargetAndTransition,
-} from "framer-motion";
+} from "motion/react";
 import { DeviceContext } from "../wrappers/GlobalWrapper";
 
 function cn(...classes: (string | undefined | null | boolean)[]): string {

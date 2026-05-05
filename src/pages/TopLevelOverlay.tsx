@@ -4,7 +4,7 @@ import {
   useLocation,
   useNavigate,
 } from "react-router-dom";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import AllPiecesMenu from "../components/organisms/AllPiecesMenu";
 import CrossfadeWrapper from "../components/wrappers/CrossfadeWrapper";
 import { createContext, useEffect, useState } from "react";
