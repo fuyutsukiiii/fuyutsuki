@@ -83,7 +83,7 @@ const TopLevelOverlay = () => {
             <div className="row-start-1 row-end-2 flex flex-col items-start">
               <span
                 className="font-helvetica-bold text-4xl sm:text-5xl pointer-events-auto cursor-pointer"
-                onClick={() => navigate("/gallery")}
+                onClick={() => navigate("/")}
               >
                 {page}
               </span>

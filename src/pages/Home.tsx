@@ -182,7 +182,7 @@ const Home = () => {
               </span>
               <span
                 className="absolute font-bold-inter pl-6 cursor-pointer text-white/100 mix-blend-overlay text-shadow-xs text-shadow-white z-3"
-                onClick={() => navigate("/gallery")}
+                onClick={() => navigate("/")}
               >
                 GALLERY
               </span>
@@ -192,7 +192,7 @@ const Home = () => {
                 width={galleryTextRef.current?.clientWidth || 0}
                 height={galleryTextRef.current?.clientHeight || 0}
                 backgroundColor="#0023E7"
-                onClick={() => navigate("/gallery")}
+                onClick={() => navigate("/")}
               />
             </div>
           )}

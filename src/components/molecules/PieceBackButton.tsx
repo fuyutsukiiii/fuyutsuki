@@ -7,7 +7,7 @@ const PieceBackButton = () => {
   return (
     <motion.div
       onClick={() => {
-        navigate("/gallery");
+        navigate("/");
       }}
       className="fixed bottom-4 sm:bottom-8 left-8 flex flex-row items-center gap-1 cursor-pointer pointer-events-auto z-999"
       whileHover="active"

@@ -71,7 +71,7 @@ const GalleryMenu = () => {
           </div>
           <span
             className="hidden sm:block absolute left-1/2 -translate-x-1/2 font-optima-italic text-lg text-primary-blue cursor-pointer"
-            onClick={() => navigate("/gallery")}
+            onClick={() => navigate("/")}
           >
             FUYUTSUKI Portfolio
           </span>
