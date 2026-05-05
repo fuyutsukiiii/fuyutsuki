@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from "react";
  */
 export function useTimer(intervalMs: number = 1000, autoStart: boolean = true) {
   const [time, setTime] = useState(0);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const start = () => {
     if (intervalRef.current === null) {
